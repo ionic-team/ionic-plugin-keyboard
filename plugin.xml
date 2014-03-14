@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="com.ionic.keyboard"
+    version="0.0.1">
+    <name>Keyboard</name>
+    <description>Ionic Keyboard Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>Ionic,keyboard</keywords>
+
+	<engines>
+		<engine name="cordova" version=">=3.2.0" />
+	</engines>
+
+    <js-module src="www/keyboard.js" name="keyboard">
+    	<clobbers target="window.Keyboard" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Keyboard">
+                <param name="ios-package" value="IonicKeyboard" onload="true" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/IonicKeyboard.h" />
+        <source-file src="src/ios/IonicKeyboard.m" />
+    </platform>
+
+</plugin>
