@@ -7,7 +7,7 @@ Keyboard
 Methods
 -------
 
-- Keyboard.scrollWhenKeyboardOpens
+- Keyboard.resizeView
 - Keyboard.hideKeyboardAccessoryBar
 
 Permissions
@@ -20,20 +20,20 @@ Permissions
             </feature>
 
 
-Keyboard.scrollWhenKeyboardOpens
+Keyboard.resizeView
 =================
 
-Shrink the WebView by the specified amount when the keyboard comes up, effectively "scrolling" the page by the specified amount.
+Shift the webview up by the specified offset amount.
 
-    Keyboard.scrollWhenKeyboardOpens(93.0);
+    Keyboard.shrinkView(93.0);
 
-To keep the WebView from scrolling when selecting inputs:
+To keep the WebView from shifting when selecting inputs:
     
-    Keyboard.scrollWhenKeyboardOpens(0.0);
+    Keyboard.shrinkView(0.0);
 
 To return to default WebView behavior, specify any negative value.
    
-    Keyboard.scrollWhenKeyboardOpens(-1.0);
+    Keyboard.shrinkView(-1.0);
   
 
 Supported Platforms
@@ -48,6 +48,19 @@ Hide the keyboard accessory bar with the next, previous and done buttons.
 
     Keyboard.hideKeyboardAccessoryBar(true);
     Keyboard.hideKeyboardAccessoryBar(false);
+
+Supported Platforms
+-------------------
+
+- iOS
+
+
+Keyboard.close
+=================
+
+Close the keyboard if it is open.
+
+    Keyboard.close();
 
 Supported Platforms
 -------------------
