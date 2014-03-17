@@ -26,6 +26,8 @@
 
         <header-file src="src/ios/IonicKeyboard.h" />
         <source-file src="src/ios/IonicKeyboard.m" />
+        <header-file src="src/ios/UIWebViewAccessoryHiding.h" />
+        <source-file src="src/ios/UIWebViewAccessoryHiding.m" />
     </platform>
 
 </plugin>
