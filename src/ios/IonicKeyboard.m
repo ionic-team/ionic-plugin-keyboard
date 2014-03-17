@@ -51,7 +51,7 @@
         return;
     }
     
-    if (scrollAmount >= 0) {
+    if (resizeOffset >= 0) {
         [nc removeObserver:_resizeViewShowObserver];
         _resizeViewShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
                                                           object:nil
