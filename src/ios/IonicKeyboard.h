@@ -2,13 +2,13 @@
 
 @interface IonicKeyboard : CDVPlugin {
     @protected
-    id _scrollWhenKeyboardOpensKeyboardShowObserver, _scrollWhenKeyboardOpensKeyboardHideObserver;
+    id _resizeViewShowObserver; 
 }
 
-@property (readwrite, assign, getter = scrollWhenKeyboardOpens, setter = setscrollWhenKeyboardOpens:) CGFloat scrollWhenKeyboardOpens;
+@property (readwrite, assign, getter = resizeView, setter = setResizeView:) CGFloat resizeView;
 @property (readwrite, assign, getter = hideKeyboardAccessoryBar, setter = setHideKeyboardAccessoryBar:)  BOOL hideKeyboardAccessoryBar;
 
-- (void) scrollWhenKeyboardOpens:(CDVInvokedUrlCommand*)command;
+- (void) resizeView:(CDVInvokedUrlCommand*)command;
 - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command;
 - (void) close:(CDVInvokedUrlCommand*)command;
 
