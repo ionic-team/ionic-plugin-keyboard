@@ -35,12 +35,9 @@ Keyboard.hideKeyboardAccessoryBar = function(hide) {
 };
 
 Keyboard.close = function() {
- exec(null, null, "Keyboard", "closeKeyboard", []);
+ exec(null, null, "Keyboard", "close", []);
 };
 
-Keyboard.close = function() {
- exec(null, null, "Keyboard", "closeKeyboard", []);
-};
 
 module.exports = Keyboard;
 });
