@@ -9,6 +9,8 @@ Methods
 
 - Keyboard.resizeView
 - Keyboard.hideKeyboardAccessoryBar
+- Keyboard.close
+- Keyboard.disableScroll
 
 Permissions
 -----------
@@ -23,7 +25,7 @@ Permissions
 Keyboard.resizeView
 =================
 
-Shift the webview up by the specified offset amount.
+Shift the WebView up by the specified offset amount.
 
     Keyboard.shrinkView(93.0);
 
@@ -68,3 +70,14 @@ Supported Platforms
 - iOS
 
     
+Keyboard.disableScroll
+=================
+
+Disable WebView scrolling when using Keyboard.resizeView
+
+    Keyboard.disableScroll();
+
+Supported Platforms
+-------------------
+
+- iOS
