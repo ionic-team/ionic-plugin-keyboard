@@ -6,11 +6,11 @@
 @implementation IonicKeyboard
 
 @synthesize hideKeyboardAccessoryBar = _hideKeyboardAccessoryBar;
-@synthesize scrollWhenKeyboardOpens = _scrollWhenKeyboardOpens;
+@synthesize resizeView = _resizeView;
 
 - (void)pluginInitialize
 {
-    self.scrollWhenKeyboardOpens = -1.0;
+    self.resizeView = -1.0;
 }
 
 - (BOOL)hideKeyboardAccessoryBar
@@ -37,44 +37,44 @@
 
 /* ------------------------------------------------------------- */
 
-- (CGFloat)scrollWhenKeyboardOpens
+- (CGFloat)resizeView
 {
-    return _scrollWhenKeyboardOpens;
+    return _resizeView;
 }
 
-- (void)setscrollWhenKeyboardOpens:(CGFloat)scrollAmount
+- (void)setResizeView:(CGFloat)resizeOffset
 {
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     __weak IonicKeyboard* weakSelf = self;
 
-    if (scrollAmount == _scrollWhenKeyboardOpens) {
+    if (resizeOffset == _resizeView) {
         return;
     }
     
     if (scrollAmount >= 0) {
-        [nc removeObserver:_scrollWhenKeyboardOpensKeyboardShowObserver];
-        _scrollWhenKeyboardOpensKeyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
+        [nc removeObserver:_resizeViewShowObserver];
+        _resizeViewShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
                                                           object:nil
                                                            queue:[NSOperationQueue mainQueue]
                                                       usingBlock:^(NSNotification* notification) {
-                [weakSelf performSelector:@selector(scrollWhenKeyboardOpensKeyboardWillShow:) withObject:notification afterDelay:0];
+                [weakSelf performSelector:@selector(resizeViewWillShow:) withObject:notification afterDelay:0];
             }];
     }
 
-    _scrollWhenKeyboardOpens = scrollAmount;
+    _resizeView = resizeOffset;
 }
 
 /* ------------------------------------------------------------- */
 
-- (void)scrollWhenKeyboardOpensKeyboardWillShow:(NSNotification*)notif
+- (void)resizeViewWillShow:(NSNotification*)notif
 {
-    if (_scrollWhenKeyboardOpens < 0) {
+    if (_resizeView < 0) {
         return;
     }
     
     CGPoint bottomOffset;
-    self.webView.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, self.scrollWhenKeyboardOpens, 0.0);
-    bottomOffset = CGPointMake(0.0, self.scrollWhenKeyboardOpens);
+    self.webView.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, self.resizeView, 0.0);
+    bottomOffset = CGPointMake(0.0, self.resizeView);
 
     self.webView.backgroundColor = [UIColor whiteColor];
 
@@ -101,14 +101,14 @@
 
 #pragma Plugin interface
 
-- (void) scrollWhenKeyboardOpens:(CDVInvokedUrlCommand*)command
+- (void) resizeView:(CDVInvokedUrlCommand*)command
 {
     id value = [command.arguments objectAtIndex:0];
     if (!([value isKindOfClass:[NSNumber class]])) {
         value = [NSNumber numberWithFloat:-1.0];
     }
     
-    self.scrollWhenKeyboardOpens = [value floatValue];
+    self.resizeView = [value floatValue];
 }
 
 - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command
