@@ -126,5 +126,10 @@
     [self.webView endEditing:YES];
 }
 
+- (void) disableScroll:(CDVInvokedUrlCommand*)command
+{
+    self.webView.scrollView.scrollEnabled = NO; 
+}
+
 
 @end

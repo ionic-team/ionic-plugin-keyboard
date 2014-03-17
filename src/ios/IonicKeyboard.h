@@ -11,6 +11,7 @@
 - (void) resizeView:(CDVInvokedUrlCommand*)command;
 - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command;
 - (void) close:(CDVInvokedUrlCommand*)command;
+- (void) disableScroll:(CDVInvokedUrlCommand*)command;
 
 @end
 

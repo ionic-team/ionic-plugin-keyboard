@@ -26,8 +26,8 @@ var argscheck = require('cordova/argscheck'),
 var Keyboard = function() {
 };
 
-Keyboard.resizeView = function(scroll) {
-    exec(null, null, "Keyboard", "resizeView", [scroll]);
+Keyboard.resizeView = function(offset) {
+    exec(null, null, "Keyboard", "resizeView", [offset]);
 };
 
 Keyboard.hideKeyboardAccessoryBar = function(hide) {
@@ -38,6 +38,9 @@ Keyboard.close = function() {
  exec(null, null, "Keyboard", "close", []);
 };
 
+Keyboard.disableScroll = function() {
+ exec(null, null, "Keyboard", "disableScroll", []);
+};
 
 module.exports = Keyboard;
 });
