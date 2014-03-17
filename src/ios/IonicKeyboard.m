@@ -121,5 +121,10 @@
     self.hideKeyboardAccessoryBar = [value boolValue];
 }
 
+- (void) close:(CDVInvokedUrlCommand*)command
+{
+    [self.webView endEditing:YES];
+}
+
 
 @end
