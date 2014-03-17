@@ -10,6 +10,7 @@
 
 - (void) scrollWhenKeyboardOpens:(CDVInvokedUrlCommand*)command;
 - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command;
+- (void) close:(CDVInvokedUrlCommand*)command;
 
 @end
 
