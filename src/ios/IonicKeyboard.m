@@ -59,6 +59,14 @@
                                                       usingBlock:^(NSNotification* notification) {
                 [weakSelf performSelector:@selector(resizeViewWillShow:) withObject:notification afterDelay:0];
             }];
+        
+        [nc removeObserver:_resizeViewHideObserver];
+        _resizeViewHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
+                                                  object:nil
+                                                   queue:[NSOperationQueue mainQueue]
+                                              usingBlock:^(NSNotification* notification) {
+                [weakSelf performSelector:@selector(resizeViewWillHide:) withObject:notification];
+                                              }];
     }
 
     _resizeView = resizeOffset;
@@ -80,6 +88,11 @@
 
     [self.webView.scrollView setContentOffset:bottomOffset];
     
+}
+
+- (void)resizeViewWillHide:(NSNotification*)notif
+{
+    self.webView.scrollView.contentInset = UIEdgeInsetsZero;
 }
 
 /* ------------------------------------------------------------- */
@@ -133,3 +146,4 @@
 
 
 @end
+

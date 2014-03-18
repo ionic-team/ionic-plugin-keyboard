@@ -2,7 +2,7 @@
 
 @interface IonicKeyboard : CDVPlugin {
     @protected
-    id _resizeViewShowObserver; 
+    id _resizeViewShowObserver, _resizeViewHideObserver;
 }
 
 @property (readwrite, assign, getter = resizeView, setter = setResizeView:) CGFloat resizeView;
