@@ -36,7 +36,7 @@ public class IonicKeyboard extends CordovaPlugin{
                 int heightDiff = rootView.getRootView().getHeight() - (r.bottom - r.top);
                 if (heightDiff > 200 && heightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
                 	 int keyboardHeight = (int)(heightDiff / density);
-                     appView.sendJavascript("cordova.fireWindowEvent('showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");
+                     appView.sendJavascript("cordova.fireWindowEvent('ionic.showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");
                 }
                 previousHeightDiff = heightDiff;
              }
