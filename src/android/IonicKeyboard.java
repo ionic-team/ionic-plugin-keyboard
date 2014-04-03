@@ -3,8 +3,6 @@ package com.ionic.keyboard;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
@@ -36,7 +34,12 @@ public class IonicKeyboard extends CordovaPlugin{
                 int heightDiff = rootView.getRootView().getHeight() - (r.bottom - r.top);
                 if (heightDiff > 200 && heightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
                 	 int keyboardHeight = (int)(heightDiff / density);
-                     appView.sendJavascript("cordova.fireWindowEvent('ionic.showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");
+                	 appView.sendJavascript("Keyboard.isVisible = true");
+                     appView.sendJavascript("cordova.fireWindowEvent('ionic.showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");                   
+                }
+                else if (heightDiff != previousHeightDiff && (previousHeightDiff - heightDiff) > 200){
+                	appView.sendJavascript("Keyboard.isVisible = false");
+                	appView.sendJavascript("cordova.fireWindowEvent('ionic.hidekeyboard')");
                 }
                 previousHeightDiff = heightDiff;
              }
@@ -44,5 +47,7 @@ public class IonicKeyboard extends CordovaPlugin{
         
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(list);
     }
+	
+	
 
 }

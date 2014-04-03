@@ -42,6 +42,8 @@ Keyboard.disableScroll = function() {
  exec(null, null, "Keyboard", "disableScroll", []);
 };
 
+Keyboard.isVisible = false; 
+
 module.exports = Keyboard;
 
 
