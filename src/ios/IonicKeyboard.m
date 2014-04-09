@@ -6,12 +6,35 @@
 @implementation IonicKeyboard
 
 @synthesize hideKeyboardAccessoryBar = _hideKeyboardAccessoryBar;
-@synthesize resizeView = _resizeView;
 
 - (void)pluginInitialize
 {
-    self.resizeView = -1.0;
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    __weak IonicKeyboard* weakSelf = self;
+  
+    weakSelf.webView.scrollView.scrollEnabled = NO;
+    
+    _keyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
+                               object:nil
+                               queue:[NSOperationQueue mainQueue]
+                               usingBlock:^(NSNotification* notification) {
+                                   
+                                   CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+                                   keyboardFrame = [self.viewController.view convertRect:keyboardFrame fromView:nil];
+                                   
+                                   [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"Keyboard.isVisible = true; cordova.fireWindowEvent('ionic.showkeyboard', { 'keyboardHeight': %@ }); ", [@(keyboardFrame.size.height) stringValue]]];
+                                   
+                               }];
+    
+    _keyboardHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
+                               object:nil
+                               queue:[NSOperationQueue mainQueue]
+                               usingBlock:^(NSNotification* notification) {
+                                   [weakSelf.commandDelegate evalJs:@"Keyboard.isVisible = false; cordova.fireWindowEvent('ionic.hidekeyboard'); "];
+                               }];
 }
+
 
 - (BOOL)hideKeyboardAccessoryBar
 {
@@ -37,92 +60,15 @@
 
 /* ------------------------------------------------------------- */
 
-- (CGFloat)resizeView
-{
-    return _resizeView;
-}
-
-- (void)setResizeView:(CGFloat)resizeOffset
-{
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    __weak IonicKeyboard* weakSelf = self;
-
-    if (resizeOffset == _resizeView) {
-        return;
-    }
-    
-    if (resizeOffset >= 0) {
-        [nc removeObserver:_resizeViewShowObserver];
-        _resizeViewShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
-                                                          object:nil
-                                                           queue:[NSOperationQueue mainQueue]
-                                                      usingBlock:^(NSNotification* notification) {
-                [weakSelf performSelector:@selector(resizeViewWillShow:) withObject:notification afterDelay:0];
-            }];
-        
-        [nc removeObserver:_resizeViewHideObserver];
-        _resizeViewHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
-                                                  object:nil
-                                                   queue:[NSOperationQueue mainQueue]
-                                              usingBlock:^(NSNotification* notification) {
-                [weakSelf performSelector:@selector(resizeViewWillHide:) withObject:notification];
-                                              }];
-    }
-
-    _resizeView = resizeOffset;
-}
-
-/* ------------------------------------------------------------- */
-
-- (void)resizeViewWillShow:(NSNotification*)notif
-{
-    if (_resizeView < 0) {
-        return;
-    }
-    
-    CGPoint bottomOffset;
-    self.webView.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, self.resizeView, 0.0);
-    bottomOffset = CGPointMake(0.0, self.resizeView);
-
-    self.webView.backgroundColor = [UIColor whiteColor];
-
-    [self.webView.scrollView setContentOffset:bottomOffset];
-    
-}
-
-- (void)resizeViewWillHide:(NSNotification*)notif
-{
-    self.webView.scrollView.contentInset = UIEdgeInsetsZero;
-}
-
-/* ------------------------------------------------------------- */
-
 - (void)dealloc
 {
-    // since this is ARC, remove observers only
-
-    //Left in because I'm a noob at Obj-C Memory management, not sure if
-    // this needs to be implemented...
-    
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 
     [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    //[nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 /* ------------------------------------------------------------- */
-
-#pragma Plugin interface
-
-- (void) resizeView:(CDVInvokedUrlCommand*)command
-{
-    id value = [command.arguments objectAtIndex:0];
-    if (!([value isKindOfClass:[NSNumber class]])) {
-        value = [NSNumber numberWithFloat:-1.0];
-    }
-    
-    self.resizeView = [value floatValue];
-}
 
 - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command
 {
@@ -139,11 +85,7 @@
     [self.webView endEditing:YES];
 }
 
-- (void) disableScroll:(CDVInvokedUrlCommand*)command
-{
-    self.webView.scrollView.scrollEnabled = NO; 
-}
-
 
 @end
+
 
