@@ -14,6 +14,9 @@
     __weak IonicKeyboard* weakSelf = self;
   
     weakSelf.webView.scrollView.scrollEnabled = NO;
+  
+    //Until disabling the auto-scroll in iOS 7 works
+    self.hideKeyboardAccessoryBar = YES;
     
     _keyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
                                object:nil
@@ -70,6 +73,7 @@
 
 /* ------------------------------------------------------------- */
 
+/*
 - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command
 {
     id value = [command.arguments objectAtIndex:0];
@@ -79,6 +83,7 @@
     
     self.hideKeyboardAccessoryBar = [value boolValue];
 }
+*/
 
 - (void) close:(CDVInvokedUrlCommand*)command
 {
@@ -87,5 +92,6 @@
 
 
 @end
+
 
 
