@@ -8,8 +8,7 @@
 @property (readwrite, assign, getter = hideKeyboardAccessoryBar, setter = setHideKeyboardAccessoryBar:)  BOOL hideKeyboardAccessoryBar;
 @property (readwrite, assign)  BOOL keyboardIsVisible;
 
-- (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command;
+//- (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command;
 - (void) close:(CDVInvokedUrlCommand*)command;
 
 @end
-
