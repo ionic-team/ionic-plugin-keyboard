@@ -23,7 +23,7 @@
                                    CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
                                    keyboardFrame = [self.viewController.view convertRect:keyboardFrame fromView:nil];
                                    
-                                   [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"Keyboard.isVisible = true; cordova.fireWindowEvent('ionic.showkeyboard', { 'keyboardHeight': %@ }); ", [@(keyboardFrame.size.height) stringValue]]];
+                                   [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.plugins.Keyboard.isVisible = true; cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight': %@ }); ", [@(keyboardFrame.size.height) stringValue]]];
                                    
                                }];
     
@@ -31,7 +31,7 @@
                                object:nil
                                queue:[NSOperationQueue mainQueue]
                                usingBlock:^(NSNotification* notification) {
-                                   [weakSelf.commandDelegate evalJs:@"Keyboard.isVisible = false; cordova.fireWindowEvent('ionic.hidekeyboard'); "];
+                                   [weakSelf.commandDelegate evalJs:@"cordova.plugins.Keyboard.isVisible = false; cordova.fireWindowEvent('native.hidekeyboard'); "];
                                }];
 }
 
