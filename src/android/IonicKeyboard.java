@@ -22,6 +22,7 @@ public class IonicKeyboard extends CordovaPlugin{
         
         final CordovaWebView appView = webView;
         
+        //http://stackoverflow.com/a/4737265/1091751 detect if keyboard is showing
         final View rootView = cordova.getActivity().getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
         OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
         	int previousHeightDiff = 0;
@@ -32,14 +33,14 @@ public class IonicKeyboard extends CordovaPlugin{
                 rootView.getWindowVisibleDisplayFrame(r);
 
                 int heightDiff = rootView.getRootView().getHeight() - (r.bottom - r.top);
-                if (heightDiff > 200 && heightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
+                if (heightDiff > 200 && heightDiff != previousHeightDiff) { // if more than 200 pixels, its probably a keyboard...
                 	 int keyboardHeight = (int)(heightDiff / density);
-                	 appView.sendJavascript("Keyboard.isVisible = true");
-                     appView.sendJavascript("cordova.fireWindowEvent('ionic.showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");                   
+                	 appView.sendJavascript("cordova.plugins.Keyboard.isVisible = true");
+                     appView.sendJavascript("cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");                   
                 }
                 else if (heightDiff != previousHeightDiff && (previousHeightDiff - heightDiff) > 200){
-                	appView.sendJavascript("Keyboard.isVisible = false");
-                	appView.sendJavascript("cordova.fireWindowEvent('ionic.hidekeyboard')");
+                	appView.sendJavascript("cordova.plugins.Keyboard.isVisible = false");
+                	appView.sendJavascript("cordova.fireWindowEvent('native.hidekeyboard')");
                 }
                 previousHeightDiff = heightDiff;
              }
