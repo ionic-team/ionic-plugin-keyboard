@@ -12,14 +12,14 @@
 		<engine name="cordova" version=">=3.2.0" />
 	</engines>
 
-    <js-module src="www/keyboard.js" name="keyboard">
-    	<clobbers target="cordova.plugins.Keyboard" />
-    </js-module>
+  <js-module src="www/keyboard.js" name="keyboard">
+    <clobbers target="cordova.plugins.Keyboard" />
+  </js-module>
 
-    <!-- android -->
-    <platform name="android">
+  <!-- android -->
+  <platform name="android">
 
-    <config-file target="config.xml" parent="/*">
+    <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Keyboard">
         <param name="android-package" value="com.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
