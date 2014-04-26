@@ -1,16 +1,25 @@
 Keyboard
 ======
 
-> The `Keyboard` object provides some functions to customize the iOS keyboard.
-
+The `Keyboard` object on the `cordova.plugins` object provides functions to make interacting with the keyboard easier, and fires events to indicate that the keyboard will hide/show.
 
 Methods
 -------
 
-- Keyboard.resizeView
-- Keyboard.hideKeyboardAccessoryBar
-- Keyboard.close
-- Keyboard.disableScroll
+- cordova.plugins.Keyboard.hideKeyboardAccessoryBar
+- cordova.plugins.Keyboard.close
+- cordova.plugins.Keyboard.disableScroll
+
+Properties
+--------
+
+- cordova.plugins.Keyboard.isVisible
+
+Events
+--------
+
+- native.showkeyboard
+- native.hidekeyboard
 
 Permissions
 -----------
@@ -21,27 +30,6 @@ Permissions
                 <param name="ios-package" value="IonicKeyboard" onload="true" />
             </feature>
 
-
-Keyboard.resizeView
-=================
-
-Shift the WebView up by the specified offset amount.
-
-    Keyboard.shrinkView(93.0);
-
-To keep the WebView from shifting when selecting inputs:
-    
-    Keyboard.shrinkView(0.0);
-
-To return to default WebView behavior, specify any negative value.
-   
-    Keyboard.shrinkView(-1.0);
-  
-
-Supported Platforms
--------------------
-
-- iOS
 
 Keyboard.hideKeyboardAccessoryBar
 =================
@@ -81,3 +69,48 @@ Supported Platforms
 -------------------
 
 - iOS
+
+
+native.showkeyboard
+=================
+
+This event fires when the keyboard will be shown
+
+    window.addEventListener('native.showkeyboard', keyboardShowHandler);
+    
+    function keyboardShowHandler(e){
+        alert('Keyboard height is: ' + e.keyboardHeight);
+    }
+
+Properties
+-----------
+
+keyboardHeight: the height of the keyboard in pixels 
+
+
+Supported Platforms
+-------------------
+
+- iOS, Android
+
+
+native.hidekeyboard
+=================
+
+This event fires when the keyboard will hide
+
+    window.addEventListener('native.hidekeyboard', keyboardHideHandler);
+    
+    function keyboardHideHandler(e){
+        alert('Goodnight, sweet prince');
+    }
+
+Properties
+-----------
+
+None
+
+Supported Platforms
+-------------------
+
+- iOS, Android
