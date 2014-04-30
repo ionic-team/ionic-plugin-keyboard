@@ -61,7 +61,7 @@ Supported Platforms
 Keyboard.disableScroll
 =================
 
-Disable WebView scrolling when using Keyboard.resizeView
+Disable native scrolling, useful if you are using JavaScript to scroll
 
     Keyboard.disableScroll();
 
