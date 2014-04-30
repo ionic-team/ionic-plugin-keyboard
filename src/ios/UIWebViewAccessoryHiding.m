@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "UIWebViewAccessoryHiding.h"
 
+//Credit: https://gist.github.com/bjhomer/2048571
 @implementation UIWebView (HackishAccessoryHiding)
  
 static const char * const hackishFixClassName = "UIWebBrowserViewMinusAccessoryView";
