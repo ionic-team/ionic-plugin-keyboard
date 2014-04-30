@@ -3,7 +3,7 @@
     "name": "com.ionic.keyboard"
     "cordova_name": "Keyboard",
     "description": "Ionic Keyboard Plugin",
-    "license": "Apache 2.0",
+    "license": "MIT",
     "keywords": [
         "ionic",
         "keyboard"
