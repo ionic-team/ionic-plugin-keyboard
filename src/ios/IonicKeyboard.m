@@ -96,6 +96,8 @@
 
     [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [nc removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+
+    [super dealloc];
 }
 
 /* ------------------------------------------------------------- */
