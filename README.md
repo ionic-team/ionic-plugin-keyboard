@@ -38,8 +38,8 @@ Keyboard.hideKeyboardAccessoryBar
 
 Hide the keyboard accessory bar with the next, previous and done buttons.
 
-    Keyboard.hideKeyboardAccessoryBar(true);
-    Keyboard.hideKeyboardAccessoryBar(false);
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
 
 Supported Platforms
 -------------------
@@ -52,7 +52,7 @@ Keyboard.close
 
 Close the keyboard if it is open.
 
-    Keyboard.close();
+    cordova.plugins.Keyboard.close();
 
 Supported Platforms
 -------------------
@@ -65,7 +65,7 @@ Keyboard.disableScroll
 
 Disable native scrolling, useful if you are using JavaScript to scroll
 
-    Keyboard.disableScroll();
+    cordova.plugins.Keyboard.disableScroll();
 
 Supported Platforms
 -------------------
