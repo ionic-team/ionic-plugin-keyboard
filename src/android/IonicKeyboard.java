@@ -11,7 +11,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 public class IonicKeyboard extends CordovaPlugin{
 
-	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         
         //calculate density-independent pixels (dp)
@@ -25,7 +25,7 @@ public class IonicKeyboard extends CordovaPlugin{
         //http://stackoverflow.com/a/4737265/1091751 detect if keyboard is showing
         final View rootView = cordova.getActivity().getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
         OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
-        	int previousHeightDiff = 0;
+            int previousHeightDiff = 0;
             @Override
             public void onGlobalLayout() {
             	Rect r = new Rect();
@@ -34,13 +34,13 @@ public class IonicKeyboard extends CordovaPlugin{
 
                 int heightDiff = rootView.getRootView().getHeight() - (r.bottom - r.top);
                 if (heightDiff > 200 && heightDiff != previousHeightDiff) { // if more than 200 pixels, its probably a keyboard...
-                	 int keyboardHeight = (int)(heightDiff / density);
-                	 appView.sendJavascript("cordova.plugins.Keyboard.isVisible = true");
-                     appView.sendJavascript("cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");                   
+                    int keyboardHeight = (int)(heightDiff / density);
+                    appView.sendJavascript("cordova.plugins.Keyboard.isVisible = true");
+                    appView.sendJavascript("cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");                   
                 }
-                else if (heightDiff != previousHeightDiff && (previousHeightDiff - heightDiff) > 200){
-                	appView.sendJavascript("cordova.plugins.Keyboard.isVisible = false");
-                	appView.sendJavascript("cordova.fireWindowEvent('native.hidekeyboard')");
+                else if ( heightDiff != previousHeightDiff && ( previousHeightDiff - heightDiff ) > 200 ){
+                    appView.sendJavascript("cordova.plugins.Keyboard.isVisible = false");
+                    appView.sendJavascript("cordova.fireWindowEvent('native.hidekeyboard')");
                 }
                 previousHeightDiff = heightDiff;
              }
