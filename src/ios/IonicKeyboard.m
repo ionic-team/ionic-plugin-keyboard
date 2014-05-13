@@ -17,8 +17,6 @@
     self.hideKeyboardAccessoryBar = NO;
     self.disableScroll = NO;
   
-    self.webView.scrollView.delegate = self;
-    
     _keyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
                                object:nil
                                queue:[NSOperationQueue mainQueue]
@@ -51,9 +49,11 @@
     }
     if (disableScroll){
         self.webView.scrollView.scrollEnabled = NO;
+        self.webView.scrollView.delegate = self;
     }
     else {
         self.webView.scrollView.scrollEnabled = YES;
+        self.webView.scrollView.delegate = nil;
     }
 
     _disableScroll = disableScroll;
@@ -126,3 +126,4 @@
 }
 
 @end
+
