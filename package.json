@@ -8,10 +8,4 @@
         "ionic",
         "keyboard"
     ],
-    "engines": [
-        {
-            "name": "cordova",
-            "version": ">=3.2.0"
-        }
-    ]
 }
