@@ -18,6 +18,10 @@ Keyboard.disableScroll = function(disable) {
  exec(null, null, "Keyboard", "disableScroll", [disable]);
 };
 
+Keyboard.styleDark = function(dark) {
+ exec(null, null, "Keyboard", "styleDark", [dark]);
+};
+
 Keyboard.isVisible = false; 
 
 module.exports = Keyboard;

@@ -5,11 +5,9 @@
     id _keyboardShowObserver, _keyboardHideObserver;
 }
 
-@property (readwrite, assign, getter = hideKeyboardAccessoryBar, setter = setHideKeyboardAccessoryBar:)  BOOL hideKeyboardAccessoryBar;
+@property (readwrite, assign) BOOL hideKeyboardAccessoryBar;
 @property (readwrite, assign) BOOL disableScroll;
-
-- (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command;
-- (void) close:(CDVInvokedUrlCommand*)command;
+@property (readwrite, assign) BOOL styleDark;
 
 @end
 

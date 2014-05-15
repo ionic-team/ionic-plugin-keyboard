@@ -1,8 +1,9 @@
 #import <objc/runtime.h>
 #import <UIKit/UIKit.h>
-#import "UIWebViewAccessoryHiding.h"
+#import "UIWebViewExtension.h"
 
 //Credit: https://gist.github.com/bjhomer/2048571
+//Also: http://stackoverflow.com/a/23398487/1091751
 @implementation UIWebView (HackishAccessoryHiding)
  
 static const char * const hackishFixClassName = "UIWebBrowserViewMinusAccessoryView";
@@ -57,5 +58,50 @@ static Class hackishFixClass = Nil;
     }
     [browserView reloadInputViews];
 }
+/* ---------------------------------------------------------------- */
+
+- (UIKeyboardAppearance) darkKeyboardAppearanceTemplateMethod {
+    return UIKeyboardAppearanceDark;
+}
+
+- (UIKeyboardAppearance) lightKeyboardAppearanceTemplateMethod {
+    return UIKeyboardAppearanceLight;
+}
+
+- (BOOL) styleDark {
+    UIView *browserView = [self hackishlyFoundBrowserView];
+    if (browserView == nil) {
+      return false;
+    }
+    
+    Method m = class_getInstanceMethod( [self class], @selector( darkKeyboardAppearanceTemplateMethod ) );
+    IMP imp = method_getImplementation( m );
+    
+    Method m2 = class_getInstanceMethod( [browserView class], @selector(keyboardAppearance) );
+    IMP imp2 = method_getImplementation( m2 );
+    
+    return imp == imp2;
+}
  
+- (void) setStyleDark:(BOOL)styleDark {
+    UIView *browserView = [self hackishlyFoundBrowserView];
+    if (browserView == nil) {
+        return;
+    }
+  
+    if ( styleDark ) {
+      Method m = class_getInstanceMethod( [self class], @selector( darkKeyboardAppearanceTemplateMethod ) );
+      IMP imp = method_getImplementation( m );
+      const char* typeEncoding = method_getTypeEncoding( m );
+      class_replaceMethod( [browserView class], @selector(keyboardAppearance), imp, typeEncoding );
+    }
+    else {
+      Method m = class_getInstanceMethod( [self class], @selector( lightKeyboardAppearanceTemplateMethod ) );
+      IMP imp = method_getImplementation( m );
+      const char* typeEncoding = method_getTypeEncoding( m );
+      class_replaceMethod( [browserView class], @selector(keyboardAppearance), imp, typeEncoding );
+    }
+}
+
 @end
+
