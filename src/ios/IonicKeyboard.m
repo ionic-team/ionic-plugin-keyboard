@@ -1,14 +1,14 @@
 #import "IonicKeyboard.h"
-#import "UIWebViewAccessoryHiding.h"
+#import "UIWebViewExtension.h"
 #import <Cordova/CDVAvailability.h>
 
 @implementation IonicKeyboard
 
 @synthesize hideKeyboardAccessoryBar = _hideKeyboardAccessoryBar;
 @synthesize disableScroll = _disableScroll;
+@synthesize styleDark = _styleDark;
 
-- (void)pluginInitialize
-{
+- (void)pluginInitialize {
   
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     __weak IonicKeyboard* weakSelf = self;
@@ -16,7 +16,8 @@
     //set defaults
     self.hideKeyboardAccessoryBar = NO;
     self.disableScroll = NO;
-  
+    self.styleDark = NO;
+    
     _keyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
                                object:nil
                                queue:[NSOperationQueue mainQueue]
@@ -37,17 +38,15 @@
                                    [weakSelf.commandDelegate evalJs:@"cordova.plugins.Keyboard.isVisible = false; cordova.fireWindowEvent('native.hidekeyboard'); "];
                                }];
 }
-- (BOOL)disableScroll
-{
+- (BOOL)disableScroll {
     return _disableScroll;
 }
 
-- (void)setDisableScroll:(BOOL)disableScroll
-{
+- (void)setDisableScroll:(BOOL)disableScroll {
     if (disableScroll == _disableScroll) {
         return;
     }
-    if (disableScroll){
+    if (disableScroll) {
         self.webView.scrollView.scrollEnabled = NO;
         self.webView.scrollView.delegate = self;
     }
@@ -60,17 +59,15 @@
 }
 
 
-- (BOOL)hideKeyboardAccessoryBar
-{
+- (BOOL)hideKeyboardAccessoryBar {
     return _hideKeyboardAccessoryBar;
 }
 
-- (void)setHideKeyboardAccessoryBar:(BOOL)hideKeyboardAccessoryBar
-{
+- (void)setHideKeyboardAccessoryBar:(BOOL)hideKeyboardAccessoryBar {
     if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar) {
         return;
     }
-    if (hideKeyboardAccessoryBar){
+    if (hideKeyboardAccessoryBar) {
         self.webView.hackishlyHidesInputAccessoryView = YES;
     }
     else {
@@ -78,6 +75,24 @@
     }
 
     _hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
+}
+
+- (BOOL)styleDark {
+    return _styleDark;
+}
+
+- (void)setStyleDark:(BOOL)styleDark {
+    if (styleDark == _styleDark) {
+        return;
+    }
+    if (styleDark) {
+        self.webView.styleDark = YES;
+    }
+    else {
+        self.webView.styleDark = NO;
+    }
+
+    _styleDark = styleDark;
 }
 
 
@@ -123,6 +138,16 @@
 - (void) close:(CDVInvokedUrlCommand*)command
 {
     [self.webView endEditing:YES];
+}
+
+- (void) styleDark:(CDVInvokedUrlCommand*)command
+{
+    if (!command.arguments || ![command.arguments count]){
+      return;
+    }
+    id value = [command.arguments objectAtIndex:0];
+    
+    self.styleDark = [value boolValue];
 }
 
 @end
