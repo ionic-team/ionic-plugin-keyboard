@@ -18,7 +18,7 @@ public class IonicKeyboard extends CordovaPlugin{
         //http://developer.android.com/guide/practices/screens_support.html
         DisplayMetrics dm = new DisplayMetrics();
         cordova.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        final int density = (int)(dm.density);
+        float density = metrics.density;
         
         final CordovaWebView appView = webView;
         
