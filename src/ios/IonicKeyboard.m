@@ -98,15 +98,13 @@
 
 /* ------------------------------------------------------------- */
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [scrollView setContentOffset: CGPointZero];
 }
 
 /* ------------------------------------------------------------- */
 
-- (void)dealloc
-{
+- (void)dealloc {
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 
     [nc removeObserver:self name:UIKeyboardWillShowNotification object:nil];
@@ -115,8 +113,7 @@
 
 /* ------------------------------------------------------------- */
 
-- (void) disableScroll:(CDVInvokedUrlCommand*)command
-{
+- (void) disableScroll:(CDVInvokedUrlCommand*)command {
     if (!command.arguments || ![command.arguments count]){
       return;
     }
@@ -125,8 +122,7 @@
     self.disableScroll = [value boolValue];
 }
 
-- (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command
-{
+- (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command {
     if (!command.arguments || ![command.arguments count]){
       return;
     }
@@ -135,13 +131,11 @@
     self.hideKeyboardAccessoryBar = [value boolValue];
 }
 
-- (void) close:(CDVInvokedUrlCommand*)command
-{
+- (void) close:(CDVInvokedUrlCommand*)command {
     [self.webView endEditing:YES];
 }
 
-- (void) styleDark:(CDVInvokedUrlCommand*)command
-{
+- (void) styleDark:(CDVInvokedUrlCommand*)command {
     if (!command.arguments || ![command.arguments count]){
       return;
     }
