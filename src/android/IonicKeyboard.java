@@ -33,16 +33,16 @@ public class IonicKeyboard extends CordovaPlugin{
                 rootView.getWindowVisibleDisplayFrame(r);
 
                 int heightDiff = rootView.getRootView().getHeight() - (r.bottom - r.top);
-                if (heightDiff > 200 && heightDiff != previousHeightDiff) { // if more than 200 pixels, its probably a keyboard...
-                    int keyboardHeight = (int)(heightDiff / density);
+                int pixelHeightDiff = (int)(heightDiff / density);
+                if (pixelHeightDiff > 100 && pixelHeightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
                     appView.sendJavascript("cordova.plugins.Keyboard.isVisible = true");
-                    appView.sendJavascript("cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(keyboardHeight)+"});");                   
+                    appView.sendJavascript("cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");                   
                 }
-                else if ( heightDiff != previousHeightDiff && ( previousHeightDiff - heightDiff ) > 200 ){
+                else if ( pixelHeightDiff != previousHeightDiff && ( previousHeightDiff - pixelHeightDiff ) > 100 ){
                     appView.sendJavascript("cordova.plugins.Keyboard.isVisible = false");
                     appView.sendJavascript("cordova.fireWindowEvent('native.hidekeyboard')");
                 }
-                previousHeightDiff = heightDiff;
+                previousHeightDiff = pixelHeightDiff;
              }
         }; 
         
