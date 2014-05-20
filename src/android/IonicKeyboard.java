@@ -35,18 +35,18 @@ public class IonicKeyboard extends CordovaPlugin{
                 int heightDiff = rootView.getRootView().getHeight() - (r.bottom - r.top);
                 int pixelHeightDiff = (int)(heightDiff / density);
                 if (pixelHeightDiff > 100 && pixelHeightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
-                    appView.sendJavascript("cordova.plugins.Keyboard.isVisible = true");
-                    appView.sendJavascript("cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");        
+                    appView.loadUrl("javascript:cordova.plugins.Keyboard.isVisible = true");
+                    appView.loadUrl("javascript:cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");        
 
                     //deprecated
-                    appView.sendJavascript("cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");                   
+                    appView.loadUrl("javascript:cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");                   
                 }
                 else if ( pixelHeightDiff != previousHeightDiff && ( previousHeightDiff - pixelHeightDiff ) > 100 ){
-                    appView.sendJavascript("cordova.plugins.Keyboard.isVisible = false");
-                    appView.sendJavascript("cordova.fireWindowEvent('native.keyboardhide')");
+                    appView.loadUrl("javascript:cordova.plugins.Keyboard.isVisible = false");
+                    appView.loadUrl("javascript:cordova.fireWindowEvent('native.keyboardhide')");
 
                     //deprecated
-                    appView.sendJavascript("cordova.fireWindowEvent('native.hidekeyboard')");
+                    appView.loadUrl("javascript:cordova.fireWindowEvent('native.hidekeyboard')");
                 }
                 previousHeightDiff = pixelHeightDiff;
              }
