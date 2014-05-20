@@ -60,6 +60,7 @@ static Class hackishFixClass = Nil;
 }
 /* ---------------------------------------------------------------- */
 
+/*
 - (UIKeyboardAppearance) darkKeyboardAppearanceTemplateMethod {
     return UIKeyboardAppearanceDark;
 }
@@ -102,6 +103,7 @@ static Class hackishFixClass = Nil;
       class_replaceMethod( [browserView class], @selector(keyboardAppearance), imp, typeEncoding );
     }
 }
+*/
 
 @end
 
