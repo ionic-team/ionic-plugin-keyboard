@@ -20,7 +20,10 @@ Properties
 Events
 --------
 
+These events are fired on the document. 
+
 - native.keyboardshow
+  * A number `keyboardHeight` is given on the event object, which is the pixel height of the keyboard.
 - native.keyboardhide
 
 Permissions
