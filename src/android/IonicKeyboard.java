@@ -1,13 +1,19 @@
 package com.ionic.keyboard; 
 
+import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult.Status;
+import org.json.JSONArray;
+import org.json.JSONException;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.inputmethod.InputMethodManager;
 
 public class IonicKeyboard extends CordovaPlugin{
 
@@ -55,6 +61,26 @@ public class IonicKeyboard extends CordovaPlugin{
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(list);
     }
 	
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        if ("close".equals(action)) {
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                	//http://stackoverflow.com/a/7696791/1091751
+                	InputMethodManager inputManager = (InputMethodManager) cordova.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                	View v = cordova.getActivity().getCurrentFocus();
+                	
+                	if (v == null) {
+                		callbackContext.error("No current focus");
+                	}
+                	inputManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    callbackContext.success(); // Thread-safe.
+                }
+            });
+            return true;
+        }
+        return false;  // Returning false results in a "MethodNotFound" error.
+    }
 	
 
 }
+
