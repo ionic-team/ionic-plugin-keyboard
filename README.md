@@ -60,7 +60,7 @@ Close the keyboard if it is open.
 Supported Platforms
 -------------------
 
-- iOS
+- iOS, Android
 
     
 Keyboard.disableScroll
