@@ -1,7 +1,7 @@
 Keyboard
 ======
 
-The `Keyboard` object on the `cordova.plugins` object provides functions to make interacting with the keyboard easier, and fires events to indicate that the keyboard will hide/show.
+The `cordova.plugins.Keyboard` object provides functions to make interacting with the keyboard easier, and fires events to indicate that the keyboard will hide/show.
 
     cordova plugin add https://github.com/driftyco/ionic-plugins-keyboard.git
 
@@ -20,7 +20,7 @@ Properties
 Events
 --------
 
-These events are fired on the document. 
+These events are fired on the window. 
 
 - native.keyboardshow
   * A number `keyboardHeight` is given on the event object, which is the pixel height of the keyboard.
