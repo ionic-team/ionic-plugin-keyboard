@@ -11,6 +11,7 @@ Methods
 - cordova.plugins.Keyboard.hideKeyboardAccessoryBar
 - cordova.plugins.Keyboard.close
 - cordova.plugins.Keyboard.disableScroll
+- cordova.plugins.Keyboard.show
 
 Properties
 --------
@@ -20,7 +21,7 @@ Properties
 Events
 --------
 
-These events are fired on the window. 
+These events are fired on the window.
 
 - native.keyboardshow
   * A number `keyboardHeight` is given on the event object, which is the pixel height of the keyboard.
@@ -62,7 +63,7 @@ Supported Platforms
 
 - iOS, Android
 
-    
+
 Keyboard.disableScroll
 =================
 
@@ -76,6 +77,16 @@ Supported Platforms
 
 - iOS
 
+Keyboard.show
+=================
+
+Force keyboard to be shown on Android. This typically helps if autofocus on a text element does not pop up the keyboard automatically
+
+    cordova.plugins.Keyboard.show();
+
+Supported Platforms
+
+- Android
 
 native.keyboardshow
 =================
@@ -83,7 +94,7 @@ native.keyboardshow
 This event fires when the keyboard will be shown
 
     window.addEventListener('native.keyboardshow', keyboardShowHandler);
-    
+
     function keyboardShowHandler(e){
         alert('Keyboard height is: ' + e.keyboardHeight);
     }
@@ -91,7 +102,7 @@ This event fires when the keyboard will be shown
 Properties
 -----------
 
-keyboardHeight: the height of the keyboard in pixels 
+keyboardHeight: the height of the keyboard in pixels
 
 
 Supported Platforms
@@ -106,7 +117,7 @@ native.keyboardhide
 This event fires when the keyboard will hide
 
     window.addEventListener('native.keyboardhide', keyboardHideHandler);
-    
+
     function keyboardHideHandler(e){
         alert('Goodnight, sweet prince');
     }
