@@ -2,7 +2,7 @@
 var argscheck = require('cordova/argscheck'),
     utils = require('cordova/utils'),
     exec = require('cordova/exec');
-   
+
 var Keyboard = function() {
 };
 
@@ -12,6 +12,10 @@ Keyboard.hideKeyboardAccessoryBar = function(hide) {
 
 Keyboard.close = function() {
  exec(null, null, "Keyboard", "close", []);
+};
+
+Keyboard.show = function() {
+ exec(null, null, "Keyboard", "show", []);
 };
 
 Keyboard.disableScroll = function(disable) {
@@ -24,7 +28,7 @@ Keyboard.styleDark = function(dark) {
 };
 */
 
-Keyboard.isVisible = false; 
+Keyboard.isVisible = false;
 
 module.exports = Keyboard;
 
