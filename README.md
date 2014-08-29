@@ -3,7 +3,7 @@ Keyboard
 
 The `cordova.plugins.Keyboard` object provides functions to make interacting with the keyboard easier, and fires events to indicate that the keyboard will hide/show.
 
-    cordova plugin add https://github.com/driftyco/ionic-plugins-keyboard.git
+    cordova plugin add com.ionic.keyboard
 
 Methods
 -------
