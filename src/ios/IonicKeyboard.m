@@ -142,7 +142,7 @@
 }
 
 - (void) show:(CDVInvokedUrlCommand*)command {
-    NSLog(@"Showing keyboard not supported in iOS");
+    NSLog(@"Showing keyboard not supported in iOS due to platform limitations.");
 }
 
 /*
