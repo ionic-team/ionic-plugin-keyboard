@@ -141,6 +141,10 @@
     [self.webView endEditing:YES];
 }
 
+- (void) show:(CDVInvokedUrlCommand*)command {
+    NSLog(@"Showing keyboard not supported in iOS due to platform limitations.");
+}
+
 /*
 - (void) styleDark:(CDVInvokedUrlCommand*)command {
     if (!command.arguments || ![command.arguments count]){
