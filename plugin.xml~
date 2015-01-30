@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="com.ionic.keyboard"
+    id="com.cordova.ionic"
     version="1.0.3">
     <name>Keyboard</name>
     <description>Ionic Keyboard Plugin</description>
@@ -12,6 +12,7 @@
 
   <js-module src="www/keyboard.js" name="keyboard">
     <clobbers target="cordova.plugins.Keyboard" />
+	<clobbers target="Keyboard" />
   </js-module>
 
   <!-- android -->
@@ -47,7 +48,7 @@
         <lib-file src="src/blackberry10/native/device/libKeyboard.so" arch="device"/>
         <lib-file src="src/blackberry10/native/simulator/libKeyboard.so" arch="simulator"/>
         <config-file target="www/config.xml" parent="/widget">
-               <feature name="Keyboard" value="com.ionic.keyboard"/>
+               <feature name="Keyboard" value="Keyboard"/>
             
         </config-file>
     </platform>
