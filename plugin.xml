@@ -43,7 +43,7 @@
 
     <!-- blackberry10 -->
     <platform name="blackberry10">
-        <source-file src="src/blackberry10/index.js" />
+        <source-file src="src/blackberry10/index.js" target-dir='Keyboard' />
         <lib-file src="src/blackberry10/native/device/libKeyboard.so" arch="device"/>
         <lib-file src="src/blackberry10/native/simulator/libKeyboard.so" arch="simulator"/>
         <config-file target="www/config.xml" parent="/widget">

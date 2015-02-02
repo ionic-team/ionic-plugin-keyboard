@@ -58,7 +58,7 @@ keyboardHide = function(){
 	_webview.executeJavascript("cordova.fireDocumentEvent('native.keyboardhide','')");
 }
 onStart = function() {
-		_webview.executeJavascript("cordova.exec("+null+", "+null+", 'com.ionic.keyboard', 'startService', '')");
+		_webview.executeJavascript("cordova.exec("+null+", "+null+", 'Keyboard', 'startService', '')");
 	}
 
 setTimeout(onStart,2000);
