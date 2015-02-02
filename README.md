@@ -61,7 +61,7 @@ Close the keyboard if it is open.
 Supported Platforms
 -------------------
 
-- iOS, Android
+- iOS, Android, Blackberry 10
 
 
 Keyboard.disableScroll
@@ -86,7 +86,7 @@ Force keyboard to be shown on Android. This typically helps if autofocus on a te
 
 Supported Platforms
 
-- Android
+- Android, Blackberry 10
 
 native.keyboardshow
 =================
