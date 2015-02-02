@@ -108,7 +108,7 @@ keyboardHeight: the height of the keyboard in pixels
 Supported Platforms
 -------------------
 
-- iOS, Android
+- iOS, Android, Blackberry 10
 
 
 native.keyboardhide
@@ -130,4 +130,4 @@ None
 Supported Platforms
 -------------------
 
-- iOS, Android
+- iOS, Android, Blackberry 10
