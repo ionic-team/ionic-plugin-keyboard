@@ -1,18 +1,4 @@
-/*
-* Copyright (c) 2013 BlackBerry Limited
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+
 
 var keyboard,
 	resultObjs = {},
@@ -102,22 +88,6 @@ JNEXT.Keyboard = function () {
 	};
 	self.closeKeyboard = function () {
 		return JNEXT.invoke(self.m_id, "closeKeyboard");
-	};
-	self.keyboardTest = function () {
-		return JNEXT.invoke(self.m_id, "keyboardTest");
-	};
-	self.keyboardTestInput = function (callbackId, input) {
-		return JNEXT.invoke(self.m_id, "keyboardTestInput " + callbackId + " " + input);
-	};
-	self.keyboardTestAsync = function (callbackId, input) {
-		return JNEXT.invoke(self.m_id, "keyboardTestAsync " + callbackId + " " + JSON.stringify(input));
-	};
-	self.keyboardProperty = function (callbackId, value) {
-		if (value) {
-			return JNEXT.invoke(self.m_id, "keyboardProperty " + callbackId + " " + value);
-		} else {
-			return JNEXT.invoke(self.m_id, "keyboardProperty");
-		}
 	};
 
 	self.onEvent = function (strData) 	{ 	// Fired by the Event framework (used by asynchronous callbacks)
