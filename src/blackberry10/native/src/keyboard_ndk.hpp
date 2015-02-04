@@ -19,7 +19,6 @@
 
 #include <string>
 #include <pthread.h>
-#include "CallKeyboard.h"
 #include <bb/AbstractBpsEventHandler>
 #include <bps/bps.h>
 #include<bps/netstatus.h>
