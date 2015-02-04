@@ -34,7 +34,6 @@ public:
     webworks::Logger* getLog();
 private:
     std::string m_id;
-    // Definition of a pointer to the actual native extension code
     webworks::Keyboard_NDK *m_pKeyboardController;
     webworks::Logger *m_pLogger;
 

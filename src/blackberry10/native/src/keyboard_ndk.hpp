@@ -38,28 +38,15 @@ public:
 	explicit Keyboard_NDK(Keyboard_JS *parent = NULL);
 	virtual ~Keyboard_NDK();
     virtual void event(bps_event_t *event);
-    void callKeyboardEmail();
-    void callKeyboardNumber();
-    void cancelKeyboard();
 
-	// The extension methods are defined here
-	std::string keyboardTest();
+    void callKeyboardEmail(); // Method Calls the Keyboard style Email (default)
 
-	std::string keyboardTest(const std::string& inputString);
+    void callKeyboardNumber(); // Method Calls the Keyboard style number
 
-	std::string getKeyboardProperty();
-
-	void setKeyboardProperty(const std::string& inputString);
-
-	void keyboardTestAsync(const std::string& callbackId, const std::string& inputString);
+    void cancelKeyboard(); // Method cancel the keyboard
 
 	std::string keyboardStartThread();
 
-	std::string keyboardStopThread();
-
-	bool isThreadHalt();
-
-	void keyboardThreadCallback();
 
 
 

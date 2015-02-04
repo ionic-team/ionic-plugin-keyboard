@@ -33,12 +33,11 @@ Keyboard_NDK::Keyboard_NDK(Keyboard_JS *parent):
 		pthread_cond_t cond  = PTHREAD_COND_INITIALIZER;
 		pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	   bps_initialize();
-	  // subscribe(virtualkeyboard_get_domain());
-	    //subscribe(navigator_get_domain());
+
 	    virtualkeyboard_request_events(0);
-	    //navigator_request_events(0);
+
 	    virtualkeyboard_change_options(VIRTUALKEYBOARD_LAYOUT_EMAIL,VIRTUALKEYBOARD_ENTER_DEFAULT);
-	   //virtualkeyboard_show();
+
 		m_pParent->getLog()->info("Keyboard Created");
 
 
@@ -49,72 +48,11 @@ Keyboard_NDK::~Keyboard_NDK() {
     //bps_shutdown();
 }
 
-// These methods are the true native code we intend to reach from WebWorks
-std::string Keyboard_NDK::keyboardTest() {
-	m_pParent->getLog()->debug("testString");
-	return "Keyboard Test Function";
-}
 
-// Take in input and return a value
-std::string Keyboard_NDK::keyboardTest(const std::string& inputString) {
-	m_pParent->getLog()->debug("testStringInput");
-	//m_pParent->NotifyEvent("Teste");
-
-	return "Keyboard Test Function, got: " + inputString;
-}
-
-// Get an integer property
-std::string Keyboard_NDK::getKeyboardProperty() {
-	m_pParent->getLog()->debug("getKeyboardProperty");
-	stringstream ss;
-	ss << keyboardProperty;
-	return ss.str();
-}
-
-// set an integer property
-void Keyboard_NDK::setKeyboardProperty(const std::string& inputString) {
-	m_pParent->getLog()->debug("setKeyboardProperty");
-	keyboardProperty = (int) strtoul(inputString.c_str(), NULL, 10);
-}
-
-// Asynchronous callback with JSON data input and output
-void Keyboard_NDK::keyboardTestAsync(const std::string& callbackId, const std::string& inputString) {
-	m_pParent->getLog()->debug("Async Test");
-	// Parse the arg string as JSON
-	Json::FastWriter writer;
-	Json::Reader reader;
-	Json::Value root;
-	bool parse = reader.parse(inputString, root);
-
-	if (!parse) {
-		m_pParent->getLog()->error("Parse Error");
-		Json::Value error;
-		error["result"] = "Cannot parse JSON object";
-		m_pParent->NotifyEvent(callbackId + " " + writer.write(error));
-	} else {
-		root["result"] = root["value1"].asInt() + root["value2"].asInt();
-		m_pParent->NotifyEvent(callbackId + " " + writer.write(root));
-	}
-}
-
-// Thread functions
-// The following functions are for controlling a Thread in the extension
-
-// The actual thread (must appear before the startThread method)
 // Loops and runs the callback method
 void* KeyboardThread(void* parent) {
 	Keyboard_NDK *pParent = static_cast<Keyboard_NDK *>(parent);
 
-	// Loop calls the callback function and continues until stop is set
-/*	while (!pParent->isThreadHalt()) {
-		sleep(1);
-		pParent->keyboardThreadCallback();
-	}
-*/
-/*	while(1){
-pParent->event()
-	}
-	return NULL;*/
 	sleep(1);
 
 	 // 1. Start the library
@@ -166,46 +104,6 @@ std::string Keyboard_NDK::keyboardStartThread() {
 	}
 }
 
-// Sets the stop value
-std::string Keyboard_NDK::keyboardStopThread() {
-	int rc;
-	// Request thread to set prevent sleep to false and terminate
-	rc = pthread_mutex_lock(&mutex);
-	threadHalt = true;
-	rc = pthread_cond_signal(&cond);
-	rc = pthread_mutex_unlock(&mutex);
-
-    // Wait for the thread to terminate.
-    void *exit_status;
-    rc = pthread_join(m_thread, &exit_status) ;
-
-	// Clean conditional variable and mutex
-	pthread_cond_destroy(&cond);
-	pthread_mutex_destroy(&mutex);
-
-	m_thread = 0;
-	threadHalt = true;
-	m_pParent->getLog()->info("Thread Stopped");
-	return "Thread stopped";
-}
-
-// The callback method that sends an event through JNEXT
-void Keyboard_NDK::keyboardThreadCallback() {
-	Json::FastWriter writer;
-	Json::Value root;
-	root["threadCount"] = keyboardThreadCount++;
-	m_pParent->NotifyEvent(threadCallbackId + " " + writer.write(root));
-}
-
-// getter for the stop value
-bool Keyboard_NDK::isThreadHalt() {
-	int rc;
-	bool isThreadHalt;
-	rc = pthread_mutex_lock(&mutex);
-	isThreadHalt = threadHalt;
-	rc = pthread_mutex_unlock(&mutex);
-	return isThreadHalt;
-}
 
 void Keyboard_NDK::event(bps_event_t *event) {
     Json::FastWriter writer;
@@ -220,8 +118,6 @@ void Keyboard_NDK::event(bps_event_t *event) {
           std::ostringstream strs;
           switch(code) {
               case VIRTUALKEYBOARD_EVENT_VISIBLE:
-                 // m_pParent->getLog()->debug("Visible");
-                 // m_pParent->NotifyEvent("Visi");
                   eventString = "native.keyboardshow";
                   eventString.append(" ");
                   virtualkeyboard_get_height(&a) ;
@@ -256,4 +152,4 @@ void Keyboard_NDK::cancelKeyboard(){
 
 
 
-} /* namespace webworks */
+}
