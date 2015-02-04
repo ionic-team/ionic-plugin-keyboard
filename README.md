@@ -27,16 +27,6 @@ These events are fired on the window.
   * A number `keyboardHeight` is given on the event object, which is the pixel height of the keyboard.
 - native.keyboardhide
 
-Permissions
------------
-
-#### config.xml
-
-            <feature name="Keyboard">
-                <param name="ios-package" value="IonicKeyboard" onload="true" />
-            </feature>
-
-
 Keyboard.hideKeyboardAccessoryBar
 =================
 
