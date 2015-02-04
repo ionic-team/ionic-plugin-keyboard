@@ -37,7 +37,7 @@ private:
     // Definition of a pointer to the actual native extension code
     webworks::Keyboard_NDK *m_pKeyboardController;
     webworks::Logger *m_pLogger;
-    webworks::CallKeyboard *m_keyboard;
+
 };
 
 #endif /* Keyboard_JS_HPP_ */

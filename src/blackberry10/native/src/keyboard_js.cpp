@@ -29,7 +29,7 @@ Keyboard_JS::Keyboard_JS(const std::string& id) :
 		m_id(id) {
 	m_pLogger = new webworks::Logger("Keyboard_JS", this);
 	m_pKeyboardController = new webworks::Keyboard_NDK(this);
-	//m_keyboard = new  webworks::CallKeyboard(this);
+
 
 }
 
@@ -111,15 +111,7 @@ string Keyboard_JS::InvokeMethod(const string& command) {
 void Keyboard_JS::NotifyEvent(const std::string& event) {
 	std::string eventString = m_id + " ";
 	eventString.append(event);
-
-//	eventString.append("com.ionic.keyboard.keyboardTest");
-//	eventString.append(" ");
-//	int a = 1;
-//	std::ostringstream strs;
-//	strs << a;
-//	std::string str = strs.str();
-//	eventString.append("{\"keyboardHeight\":\""+str+"\"}");
 	SendPluginEvent(eventString.c_str(), m_pContext);
-	//InvokeFunction("Teste",m_pContext);
+
 }
 
