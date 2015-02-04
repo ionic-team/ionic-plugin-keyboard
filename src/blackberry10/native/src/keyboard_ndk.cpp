@@ -37,7 +37,7 @@ Keyboard_NDK::Keyboard_NDK(Keyboard_JS *parent):
 	    //subscribe(navigator_get_domain());
 	    virtualkeyboard_request_events(0);
 	    //navigator_request_events(0);
-	    virtualkeyboard_change_options(VIRTUALKEYBOARD_LAYOUT_EMAIL,VIRTUALKEYBOARD_ENTER_SEND);
+	    virtualkeyboard_change_options(VIRTUALKEYBOARD_LAYOUT_EMAIL,VIRTUALKEYBOARD_ENTER_DEFAULT);
 	   //virtualkeyboard_show();
 		m_pParent->getLog()->info("Keyboard Created");
 
