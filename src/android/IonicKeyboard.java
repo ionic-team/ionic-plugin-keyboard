@@ -38,7 +38,7 @@ public class IonicKeyboard extends CordovaPlugin{
                 //r will be populated with the coordinates of your view that area still visible.
                 rootView.getWindowVisibleDisplayFrame(r);
 
-                int heightDiff = rootView.getRootView().getHeight() - (r.bottom - r.top);
+                int heightDiff = rootView.getRootView().getHeight() - (r.bottom);
                 int pixelHeightDiff = (int)(heightDiff / density);
                 if (pixelHeightDiff > 100 && pixelHeightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
                     appView.sendJavascript("cordova.plugins.Keyboard.isVisible = true");
