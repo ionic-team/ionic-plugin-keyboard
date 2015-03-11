@@ -11,6 +11,7 @@
     <issue>https://github.com/driftyco/ionic-plugins-keyboard/issues</issue>
 
   <js-module src="www/keyboard.js" name="keyboard">
+    <runs/>
     <clobbers target="cordova.plugins.Keyboard" />
   </js-module>
 
