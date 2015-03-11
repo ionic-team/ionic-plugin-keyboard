@@ -33,28 +33,25 @@ Keyboard.styleDark = function(dark) {
 Keyboard.isVisible = false;
 
 channel.onCordovaReady.subscribe(function() {
-  exec(success, null, 'Keyboard', 'init', []);
+    exec(success, null, 'Keyboard', 'init', []);
 
-  function success(msg) {
-   var action = msg.charAt(0);
-   if ( action === 'S' ) {
-      var keyboardHeight = msg.substr(1);
-      cordova.plugins.Keyboard.isVisible = true;
-      cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight': + keyboardHeight });
+    function success(msg) {
+        var action = msg.charAt(0);
+        if ( action === 'S' ) {
+            var keyboardHeight = msg.substr(1);
+            cordova.plugins.Keyboard.isVisible = true;
+            cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight': + keyboardHeight });
 
-      //deprecated
-      cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight': + keyboardHeight });
-   } 
+            //deprecated
+            cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight': + keyboardHeight });
+        } else if ( action === 'H' ) {
+            cordova.plugins.Keyboard.isVisible = false;
+            cordova.fireWindowEvent('native.keyboardhide');
 
-   if ( action === 'H' ) {
-     cordova.plugins.Keyboard.isVisible = false;
-     cordova.fireWindowEvent('native.keyboardhide');
-
-     //deprecated
-     cordova.fireWindowEvent('native.hidekeyboard');
-   }
-
-  }
+            //deprecated
+            cordova.fireWindowEvent('native.hidekeyboard');
+        }
+    }
 });
 
 module.exports = Keyboard;
