@@ -1,6 +1,6 @@
 #import <Cordova/CDVPlugin.h>
 
-@interface IonicKeyboard : CDVPlugin <UIScrollViewDelegate> {
+@interface IonicKeyboard : CDVPlugin <UIScrollViewDelegate, UITextFieldDelegate> {
     @protected
     id _keyboardShowObserver, _keyboardHideObserver;
 }
@@ -10,4 +10,5 @@
 //@property (readwrite, assign) BOOL styleDark;
 
 @end
+
 

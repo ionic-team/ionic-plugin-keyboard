@@ -23,6 +23,14 @@ Keyboard.disableScroll = function(disable) {
     exec(null, null, "Keyboard", "disableScroll", [disable]);
 };
 
+document.addEventListener('focusin', function(e){
+  Keyboard.activeInput = document.activeElement;
+});
+
+Keyboard.updateInput = function(e){
+  Keyboard.activeInput.value = e.text;
+}
+
 /*
 Keyboard.styleDark = function(dark) {
  exec(null, null, "Keyboard", "styleDark", [dark]);
@@ -30,8 +38,10 @@ Keyboard.styleDark = function(dark) {
 */
 
 Keyboard.isVisible = false;
+Keyboard.activeInput = null;
 
 module.exports = Keyboard;
+
 
 
 
