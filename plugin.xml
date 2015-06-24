@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="com.ionic.keyboard"
-    version="1.0.3">
+    version="1.0.4">
     <name>Keyboard</name>
     <description>Ionic Keyboard Plugin</description>
     <license>Apache 2.0</license>
@@ -39,6 +39,17 @@
         <source-file src="src/ios/IonicKeyboard.m" />
         <header-file src="src/ios/UIWebViewExtension.h" />
         <source-file src="src/ios/UIWebViewExtension.m" />
+    </platform>
+
+    <!-- blackberry10 -->
+    <platform name="blackberry10">
+        <source-file src="src/blackberry10/index.js" target-dir='Keyboard' />
+        <lib-file src="src/blackberry10/native/device/libKeyboard.so" arch="device"/>
+        <lib-file src="src/blackberry10/native/simulator/libKeyboard.so" arch="simulator"/>
+        <config-file target="www/config.xml" parent="/widget">
+               <feature name="Keyboard" value="com.ionic.keyboard"/>
+            
+        </config-file>
     </platform>
 
 </plugin>
