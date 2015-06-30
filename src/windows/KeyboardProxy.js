@@ -2,7 +2,6 @@
 /*global Windows, WinJS, cordova, module, require*/
 
 var inputPane = Windows.UI.ViewManagement.InputPane.getForCurrentView();
-var isPhone = cordova.platformId === 'windows' && WinJS.Utilities.isPhone;
 var keyboardScrollDisabled = false;
 
 inputPane.addEventListener('hiding', function() {
@@ -25,17 +24,13 @@ module.exports.disableScroll = function (win, fail, args) {
 };
 
 module.exports.show = function () {
-    // Due to https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.viewmanagement.inputpane.tryshow.aspx
-    // this action available on Windows Phone devices only
-    if (isPhone) {
+    if (typeof inputPane.tryShow === 'function') {
         inputPane.tryShow();
     }
 };
 
 module.exports.close = function () {
-    // Due to https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.viewmanagement.inputpane.tryhide.aspx
-    // this action available on Windows Phone devices only
-    if (isPhone) {
+    if (typeof inputPane.tryShow === 'function') {
         inputPane.tryHide();
     }
 };

@@ -51,7 +51,7 @@ Close the keyboard if it is open.
 Supported Platforms
 -------------------
 
-- iOS, Android, Blackberry 10, Windows (_Windows Phone devices only_)
+- iOS, Android, Blackberry 10, Windows 
 
 
 Keyboard.disableScroll
@@ -76,7 +76,7 @@ Force keyboard to be shown. This typically helps if autofocus on a text element 
 
 Supported Platforms
 
-- Android, Blackberry 10, Windows (_Windows Phone devices only_)
+- Android, Blackberry 10, Windows 
 
 native.keyboardshow
 =================
