@@ -52,4 +52,11 @@
         </config-file>
     </platform>
 
+    <!-- windows -->
+    <platform name="windows">
+        <js-module src="src/windows/KeyboardProxy.js" name="KeyboardProxy">
+            <runs />
+        </js-module>
+    </platform>
+
 </plugin>

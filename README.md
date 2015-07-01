@@ -51,7 +51,7 @@ Close the keyboard if it is open.
 Supported Platforms
 -------------------
 
-- iOS, Android, Blackberry 10
+- iOS, Android, Blackberry 10, Windows 
 
 
 Keyboard.disableScroll
@@ -65,18 +65,18 @@ Disable native scrolling, useful if you are using JavaScript to scroll
 Supported Platforms
 -------------------
 
-- iOS
+- iOS, Windows
 
 Keyboard.show
 =================
 
-Force keyboard to be shown on Android. This typically helps if autofocus on a text element does not pop up the keyboard automatically
+Force keyboard to be shown. This typically helps if autofocus on a text element does not pop up the keyboard automatically
 
     cordova.plugins.Keyboard.show();
 
 Supported Platforms
 
-- Android, Blackberry 10
+- Android, Blackberry 10, Windows 
 
 native.keyboardshow
 =================
@@ -98,7 +98,7 @@ keyboardHeight: the height of the keyboard in pixels
 Supported Platforms
 -------------------
 
-- iOS, Android, Blackberry 10
+- iOS, Android, Blackberry 10, Windows
 
 
 native.keyboardhide
@@ -120,4 +120,4 @@ None
 Supported Platforms
 -------------------
 
-- iOS, Android, Blackberry 10
+- iOS, Android, Blackberry 10, Windows
