@@ -6,7 +6,9 @@
     "platforms": [
       "android",
       "ios",
-      "blackberry10"
+      "blackberry10",
+      "wp8",
+      "windows"
     ]
   },
   "description": "Ionic Keyboard Plugin",
@@ -19,7 +21,9 @@
     "ecosystem:cordova",
     "cordova-android",
     "cordova-ios",
-    "cordova-blackberry10"
+    "cordova-blackberry10",
+    "cordova-wp8",
+    "cordova-windows"
   ],
   "author": "Ionic",
   "license": "Apache 2.0"
