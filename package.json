@@ -10,7 +10,7 @@
     ]
   },
   "description": "Ionic Keyboard Plugin",
-  "repo": "https://github.com/driftyco/ionic-plugins-keyboard.git",
+  "repository": "https://github.com/driftyco/ionic-plugins-keyboard.git",
   "issue": "https://github.com/driftyco/ionic-plugins-keyboard/issues",
   "keywords": [
     "ionic",
