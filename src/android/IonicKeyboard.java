@@ -4,18 +4,19 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginResult.Status;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 
-public class IonicKeyboard extends CordovaPlugin{
+public class IonicKeyboard extends CordovaPlugin {
 
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -25,9 +26,7 @@ public class IonicKeyboard extends CordovaPlugin{
         DisplayMetrics dm = new DisplayMetrics();
         cordova.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         final float density = dm.density;
-
-        final CordovaWebView appView = webView;
-
+        
         //http://stackoverflow.com/a/4737265/1091751 detect if keyboard is showing
         final View rootView = cordova.getActivity().getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
         OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
@@ -40,19 +39,20 @@ public class IonicKeyboard extends CordovaPlugin{
 
                 int heightDiff = rootView.getRootView().getHeight() - (r.bottom);
                 int pixelHeightDiff = (int)(heightDiff / density);
+                
                 if (pixelHeightDiff > 100 && pixelHeightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
-                    appView.sendJavascript("cordova.plugins.Keyboard.isVisible = true");
-                    appView.sendJavascript("cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");
+                    sendJavascript("cordova.plugins.Keyboard.isVisible = true");
+                    sendJavascript("cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");
 
                     //deprecated
-                    appView.sendJavascript("cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");
+                    sendJavascript("cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight':" + Integer.toString(pixelHeightDiff)+"});");
                 }
                 else if ( pixelHeightDiff != previousHeightDiff && ( previousHeightDiff - pixelHeightDiff ) > 100 ){
-                    appView.sendJavascript("cordova.plugins.Keyboard.isVisible = false");
-                    appView.sendJavascript("cordova.fireWindowEvent('native.keyboardhide')");
+                    sendJavascript("cordova.plugins.Keyboard.isVisible = false");
+                    sendJavascript("cordova.fireWindowEvent('native.keyboardhide')");
 
                     //deprecated
-                    appView.sendJavascript("cordova.fireWindowEvent('native.hidekeyboard')");
+                    sendJavascript("cordova.fireWindowEvent('native.hidekeyboard')");
                 }
                 previousHeightDiff = pixelHeightDiff;
              }
@@ -91,6 +91,19 @@ public class IonicKeyboard extends CordovaPlugin{
         return false;  // Returning false results in a "MethodNotFound" error.
     }
 
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	private void sendJavascript(final String javascript) {
 
+		webView.getView().post(new Runnable() {
+		    @Override
+		    public void run() {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+					webView.sendJavascript(javascript);
+				} else {
+					webView.loadUrl("javascript:" + javascript);
+				}
+		    }
+		});
+	}
 }
 
