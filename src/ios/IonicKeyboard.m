@@ -41,6 +41,7 @@
                                    //deprecated
                                    [weakSelf.commandDelegate evalJs:@"cordova.fireWindowEvent('native.hidekeyboard'); "];
                                }];
+    self.webView.keyboardDisplayRequiresUserAction = NO;
 }
 - (BOOL)disableScroll {
     return _disableScroll;
