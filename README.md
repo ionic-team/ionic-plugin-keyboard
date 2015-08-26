@@ -111,13 +111,3 @@ This event fires when the keyboard will hide
     function keyboardHideHandler(e){
         alert('Goodnight, sweet prince');
     }
-
-Properties
------------
-
-None
-
-Supported Platforms
--------------------
-
-- iOS, Android, Blackberry 10, Windows
