@@ -124,8 +124,9 @@
       return;
     }
     id value = [command.arguments objectAtIndex:0];
-    
-    self.disableScroll = [value boolValue];
+    if (value != [NSNull null]) {
+      self.disableScroll = [value boolValue];
+    }
 }
 
 - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command {
@@ -133,8 +134,9 @@
       return;
     }
     id value = [command.arguments objectAtIndex:0];
-    
-    self.hideKeyboardAccessoryBar = [value boolValue];
+    if (value != [NSNull null]) {
+      self.hideKeyboardAccessoryBar = [value boolValue];
+    }
 }
 
 - (void) close:(CDVInvokedUrlCommand*)command {
