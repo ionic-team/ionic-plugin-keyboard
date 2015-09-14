@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="com.ionic.keyboard"
+    id="ionic-plugin-keyboard"
     version="1.0.6">
     <name>Keyboard</name>
     <description>Ionic Keyboard Plugin</description>
     <license>Apache 2.0</license>
     <keywords>Ionic,keyboard</keywords>
-    <repo>https://github.com/driftyco/ionic-plugins-keyboard.git</repo>
-    <issue>https://github.com/driftyco/ionic-plugins-keyboard/issues</issue>
+    <repo>https://github.com/driftyco/ionic-plugin-keyboard.git</repo>
+    <issue>https://github.com/driftyco/ionic-plugin-keyboard/issues</issue>
 
   <js-module src="www/keyboard.js" name="keyboard">
     <runs/>

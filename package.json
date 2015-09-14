@@ -12,8 +12,8 @@
     ]
   },
   "description": "Ionic Keyboard Plugin",
-  "repository": "https://github.com/driftyco/ionic-plugins-keyboard.git",
-  "issue": "https://github.com/driftyco/ionic-plugins-keyboard/issues",
+  "repository": "https://github.com/driftyco/ionic-plugin-keyboard.git",
+  "issue": "https://github.com/driftyco/ionic-plugin-keyboard/issues",
   "keywords": [
     "ionic",
     "cordova",
