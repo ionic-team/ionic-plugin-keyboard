@@ -59,6 +59,7 @@
     <platform name="windows">
         <js-module src="src/windows/KeyboardProxy.js" name="KeyboardProxy">
             <runs />
+            <clobbers target="cordova.plugins.Keyboard" />
         </js-module>
     </platform>
 
