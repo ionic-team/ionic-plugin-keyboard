@@ -43,6 +43,7 @@
         <source-file src="src/ios/IonicKeyboard.m" />
         <header-file src="src/ios/UIWebViewExtension.h" />
         <source-file src="src/ios/UIWebViewExtension.m" />
+        <source-file src="src/ios/AppDelegate+IonicRestrictKeyboards.m" />
     </platform>
 
     <!-- blackberry10 -->
