@@ -68,14 +68,14 @@
 }
 
 - (void)setHideKeyboardAccessoryBar:(BOOL)hideKeyboardAccessoryBar {
-    if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar) {
+    if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar || ![self.webView isKindOfClass:[UIWebView class]]) {
         return;
     }
     if (hideKeyboardAccessoryBar) {
-        self.webView.hackishlyHidesInputAccessoryView = YES;
+        ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = YES;
     }
     else {
-        self.webView.hackishlyHidesInputAccessoryView = NO;
+        ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = NO;
     }
 
     _hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
