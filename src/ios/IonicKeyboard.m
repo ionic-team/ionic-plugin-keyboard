@@ -9,7 +9,7 @@
 //@synthesize styleDark = _styleDark;
 
 - (void)pluginInitialize {
-  
+
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     __weak IonicKeyboard* weakSelf = self;
 
@@ -17,21 +17,21 @@
     self.hideKeyboardAccessoryBar = YES;
     self.disableScroll = NO;
     //self.styleDark = NO;
-    
+
     _keyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
                                object:nil
                                queue:[NSOperationQueue mainQueue]
                                usingBlock:^(NSNotification* notification) {
-                                   
+
                                    CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
                                    keyboardFrame = [self.viewController.view convertRect:keyboardFrame fromView:nil];
-                                   
+
                                    [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.plugins.Keyboard.isVisible = true; cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight': %@ }); ", [@(keyboardFrame.size.height) stringValue]]];
 
                                    //deprecated
                                    [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight': %@ }); ", [@(keyboardFrame.size.height) stringValue]]];
                                }];
-    
+
     _keyboardHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
                                object:nil
                                queue:[NSOperationQueue mainQueue]
@@ -72,10 +72,14 @@
         return;
     }
     if (hideKeyboardAccessoryBar) {
-        ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = YES;
+        if ([self.webView isKindOfClass:[UIWebView class]]) {
+            ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = YES;
+        }
     }
     else {
-        ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = NO;
+        if ([self.webView isKindOfClass:[UIWebView class]]) {
+            ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = NO;
+        }
     }
 
     _hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
@@ -153,10 +157,9 @@
       return;
     }
     id value = [command.arguments objectAtIndex:0];
-    
+
     self.styleDark = [value boolValue];
 }
 */
 
 @end
-
