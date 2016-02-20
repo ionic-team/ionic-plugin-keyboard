@@ -27,6 +27,9 @@ These events are fired on the window.
   * A number `keyboardHeight` is given on the event object, which is the pixel height of the keyboard.
 - native.keyboardhide
 
+
+# API reference
+
 Keyboard.hideKeyboardAccessoryBar
 =================
 
