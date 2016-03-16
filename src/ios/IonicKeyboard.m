@@ -1,6 +1,7 @@
 #import "IonicKeyboard.h"
 #import "UIWebViewExtension.h"
 #import <Cordova/CDVAvailability.h>
+#import <objc/runtime.h>
 
 @implementation IonicKeyboard
 
@@ -67,15 +68,30 @@
     return _hideKeyboardAccessoryBar;
 }
 
+static IMP UIOriginalImp;
+static IMP WKOriginalImp;
+
 - (void)setHideKeyboardAccessoryBar:(BOOL)hideKeyboardAccessoryBar {
-    if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar || ![self.webView isKindOfClass:[UIWebView class]]) {
+    if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar) {
         return;
     }
+
+    Method UIMethod = class_getInstanceMethod(NSClassFromString(@"UIWebBrowserView"), @selector(inputAccessoryView));
+    Method WKMethod = class_getInstanceMethod(NSClassFromString(@"WKContentView"), @selector(inputAccessoryView));
+
     if (hideKeyboardAccessoryBar) {
-        ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = YES;
-    }
-    else {
-        ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = NO;
+        UIOriginalImp = method_getImplementation(UIMethod);
+        WKOriginalImp = method_getImplementation(WKMethod);
+
+        IMP newImp = imp_implementationWithBlock(^(id _s) {
+            return nil;
+        });
+
+        method_setImplementation(UIMethod, newImp);
+        method_setImplementation(WKMethod, newImp);
+    } else {
+        method_setImplementation(UIMethod, UIOriginalImp);
+        method_setImplementation(WKMethod, WKOriginalImp);
     }
 
     _hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
