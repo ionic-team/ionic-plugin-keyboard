@@ -5,6 +5,11 @@ The `cordova.plugins.Keyboard` object provides functions to make interacting wit
 
     cordova plugin add ionic-plugin-keyboard
 
+Notes
+------
+This plugin uses a private api on the iOS platform, therefore if you use this plugin your app is at risk of being rejected by Apple.
+The part of the private api being used is the "UIWebBrowserView" in the UIWebviewExtension.m file of this plugin.
+
 Methods
 -------
 
@@ -54,7 +59,7 @@ Close the keyboard if it is open.
 Supported Platforms
 -------------------
 
-- iOS, Android, Blackberry 10, Windows 
+- iOS, Android, Blackberry 10, Windows
 
 
 Keyboard.disableScroll
@@ -79,7 +84,7 @@ Force keyboard to be shown. This typically helps if autofocus on a text element 
 
 Supported Platforms
 
-- Android, Blackberry 10, Windows 
+- Android, Blackberry 10, Windows
 
 native.keyboardshow
 =================
