@@ -62,7 +62,9 @@ Supported Platforms
 Keyboard.disableScroll
 =================
 
-Disable native scrolling, useful if you are using JavaScript to scroll
+Prevent the native UIScrollView from moving when an input is focused.  The telltale sign that this is happening is the top of your app scrolls out of view (if using Ionic, your header bar will disappear).
+
+This does *not* prevent any DOM elements from being able to scroll.  That needs to happen from CSS and JavaScript, not this plugin. 
 
     cordova.plugins.Keyboard.disableScroll(true);
     cordova.plugins.Keyboard.disableScroll(false);
