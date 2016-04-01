@@ -61,6 +61,7 @@ public class IonicKeyboard extends CordovaPlugin {
                     //http://stackoverflow.com/a/4737265/1091751 detect if keyboard is showing
                     final View rootView = cordova.getActivity().getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
                     OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
+                        int initialHeightDiff = -1;
                         int previousHeightDiff = 0;
                         @Override
                         public void onGlobalLayout() {
@@ -72,6 +73,9 @@ public class IonicKeyboard extends CordovaPlugin {
 
                             int heightDiff = rootView.getRootView().getHeight() - r.bottom;
                             int pixelHeightDiff = (int)(heightDiff / density);
+                            if (initialHeightDiff != -1) {
+                                pixelHeightDiff = pixelHeightDiff - initialHeightDiff;
+                            }
                             if (pixelHeightDiff > 100 && pixelHeightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
                             	String msg = "S" + Integer.toString(pixelHeightDiff);
                                 result = new PluginResult(PluginResult.Status.OK, msg);
@@ -83,6 +87,9 @@ public class IonicKeyboard extends CordovaPlugin {
                                 result = new PluginResult(PluginResult.Status.OK, msg);
                                 result.setKeepCallback(true);
                                 callbackContext.sendPluginResult(result);
+                            }
+                            if (initialHeightDiff == -1) {
+                                initialHeightDiff = pixelHeightDiff;
                             }
                             previousHeightDiff = pixelHeightDiff;
                          }
