@@ -1,10 +1,11 @@
 #import "IonicKeyboard.h"
 // #import "UIWebViewExtension.h"
 #import <Cordova/CDVAvailability.h>
+#import <objc/runtime.h>
 
 @implementation IonicKeyboard
 
-// @synthesize hideKeyboardAccessoryBar = _hideKeyboardAccessoryBar;
+@synthesize hideKeyboardAccessoryBar = _hideKeyboardAccessoryBar;
 @synthesize disableScroll = _disableScroll;
 //@synthesize styleDark = _styleDark;
 
@@ -14,7 +15,9 @@
     __weak IonicKeyboard* weakSelf = self;
 
     //set defaults
-    // self.hideKeyboardAccessoryBar = YES;
+	_swizzledViewToOriginalClass = [[NSMapTable alloc] init];
+	_swizzledClassNameToClass = [[NSMutableDictionary alloc] init];
+    self.hideKeyboardAccessoryBar = YES;
     self.disableScroll = NO;
     //self.styleDark = NO;
 
@@ -42,6 +45,7 @@
                                    [weakSelf.commandDelegate evalJs:@"cordova.fireWindowEvent('native.hidekeyboard'); "];
                                }];
 }
+
 - (BOOL)disableScroll {
     return _disableScroll;
 }
@@ -62,24 +66,58 @@
     _disableScroll = disableScroll;
 }
 
+-(id)nil_inputAccessoryView {
+	return nil;
+}
 
-// - (BOOL)hideKeyboardAccessoryBar {
-//     return _hideKeyboardAccessoryBar;
-// }
-//
-// - (void)setHideKeyboardAccessoryBar:(BOOL)hideKeyboardAccessoryBar {
-//     if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar || ![self.webView isKindOfClass:[UIWebView class]]) {
-//         return;
-//     }
-//     if (hideKeyboardAccessoryBar) {
-//         ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = YES;
-//     }
-//     else {
-//         ((UIWebView*)self.webView).hackishlyHidesInputAccessoryView = NO;
-//     }
-//
-//     _hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
-// }
+- (void)unswizzleInputAccessoryView {
+	UIView* view;
+	while (view = [_swizzledViewToOriginalClass.keyEnumerator nextObject]) {
+		object_setClass(view, [_swizzledViewToOriginalClass objectForKey:view]);
+	}
+	[_swizzledViewToOriginalClass removeAllObjects];
+}
+
+- (Class)getSwizzledSubclassOfView:(Class)viewClass {
+	NSString* swizzledClassName = [NSString stringWithFormat:@"swizzled_%@", NSStringFromClass(viewClass)];
+	Class newClass = [_swizzledClassNameToClass objectForKey:swizzledClassName];
+	if(newClass == nil) {
+		newClass = objc_allocateClassPair(viewClass, [swizzledClassName UTF8String], 0);
+		[_swizzledClassNameToClass setObject:newClass forKey:swizzledClassName];
+		IMP nilImp = [self methodForSelector:@selector(nil_inputAccessoryView)];
+		class_addMethod(newClass, @selector(inputAccessoryView), nilImp, "@@:");
+		objc_registerClassPair(newClass);
+	}
+	return newClass;
+}
+
+- (void)swizzleInputAccessoryView {
+	for (UIView* view in self.webView.scrollView.subviews) {
+		if(![_swizzledViewToOriginalClass.keyEnumerator.allObjects containsObject:view]) {
+			[_swizzledViewToOriginalClass setObject:view.class forKey:[NSValue valueWithNonretainedObject:view]];
+			Class swizzledClass = [self getSwizzledSubclassOfView:view.class];
+			object_setClass(view, swizzledClass);
+		}
+	}
+}
+
+- (BOOL)hideKeyboardAccessoryBar {
+	return _hideKeyboardAccessoryBar;
+}
+
+- (void)setHideKeyboardAccessoryBar:(BOOL)hideKeyboardAccessoryBar {
+	if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar || ![self.webView isKindOfClass:[UIWebView class]]) {
+		return;
+	}
+	if (hideKeyboardAccessoryBar) {
+		[self swizzleInputAccessoryView];
+	}
+	else {
+		[self unswizzleInputAccessoryView];
+	}
+	
+	_hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
+}
 
 /*
 - (BOOL)styleDark {
@@ -129,15 +167,15 @@
     }
 }
 
-// - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command {
-//     if (!command.arguments || ![command.arguments count]){
-//       return;
-//     }
-//     id value = [command.arguments objectAtIndex:0];
-//     if (value != [NSNull null]) {
-//       self.hideKeyboardAccessoryBar = [value boolValue];
-//     }
-// }
+- (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command {
+	if (!command.arguments || ![command.arguments count]){
+		return;
+	}
+	id value = [command.arguments objectAtIndex:0];
+	if (value != [NSNull null]) {
+		self.hideKeyboardAccessoryBar = [value boolValue];
+	}
+}
 
 - (void) close:(CDVInvokedUrlCommand*)command {
     [self.webView endEditing:YES];

@@ -3,9 +3,11 @@
 @interface IonicKeyboard : CDVPlugin <UIScrollViewDelegate> {
     @protected
     id _keyboardShowObserver, _keyboardHideObserver;
+	NSMapTable* _swizzledViewToOriginalClass;
+	NSMutableDictionary* _swizzledClassNameToClass;
 }
 
-// @property (readwrite, assign) BOOL hideKeyboardAccessoryBar;
+@property (readwrite, assign) BOOL hideKeyboardAccessoryBar;
 @property (readwrite, assign) BOOL disableScroll;
 //@property (readwrite, assign) BOOL styleDark;
 
