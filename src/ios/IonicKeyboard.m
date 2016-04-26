@@ -73,11 +73,10 @@ NSString* const swizzled = @"swizzled_";
 
 - (void)unswizzleInputAccessoryView {
 	for (UIView* view in self.webView.scrollView.subviews) {
-		NSString* originalString = NSStringFromClass(view.class);
-		NSString *newString = [originalString copy];
-		if ([originalString hasPrefix:swizzled]) {
-			newString = [originalString substringFromIndex:[swizzled length]];
-			Class originalClass = NSClassFromString(newString);
+		NSString* currentClassName = NSStringFromClass(view.class);
+		if ([currentClassName hasPrefix:swizzled]) {
+			NSString *originalClassName = [currentClassName substringFromIndex:[swizzled length]];
+			Class originalClass = NSClassFromString(originalClassName);
 			object_setClass(view, originalClass);
 		}
 	}
