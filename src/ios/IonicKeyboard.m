@@ -3,6 +3,8 @@
 #import <Cordova/CDVAvailability.h>
 #import <objc/runtime.h>
 
+NSString* const swizzled = @"swizzled_";
+
 @implementation IonicKeyboard
 
 @synthesize hideKeyboardAccessoryBar = _hideKeyboardAccessoryBar;
@@ -15,7 +17,6 @@
     __weak IonicKeyboard* weakSelf = self;
 
     //set defaults
-	_swizzledViewToOriginalClass = [[NSMapTable alloc] init];
 	_swizzledClassNameToClass = [[NSMutableDictionary alloc] init];
     self.hideKeyboardAccessoryBar = YES;
     self.disableScroll = NO;
@@ -71,15 +72,19 @@
 }
 
 - (void)unswizzleInputAccessoryView {
-	UIView* view;
-	while (view = [_swizzledViewToOriginalClass.keyEnumerator nextObject]) {
-		object_setClass(view, [_swizzledViewToOriginalClass objectForKey:view]);
+	for (UIView* view in self.webView.scrollView.subviews) {
+		NSString* originalString = NSStringFromClass(view.class);
+		NSString *newString = [originalString copy];
+		if ([originalString hasPrefix:swizzled]) {
+			newString = [originalString substringFromIndex:[swizzled length]];
+			Class originalClass = NSClassFromString(newString);
+			object_setClass(view, originalClass);
+		}
 	}
-	[_swizzledViewToOriginalClass removeAllObjects];
 }
 
 - (Class)getSwizzledSubclassOfView:(Class)viewClass {
-	NSString* swizzledClassName = [NSString stringWithFormat:@"swizzled_%@", NSStringFromClass(viewClass)];
+	NSString* swizzledClassName = [NSString stringWithFormat:@"%@%@", swizzled, NSStringFromClass(viewClass)];
 	Class newClass = [_swizzledClassNameToClass objectForKey:swizzledClassName];
 	if(newClass == nil) {
 		newClass = objc_allocateClassPair(viewClass, [swizzledClassName UTF8String], 0);
@@ -93,8 +98,8 @@
 
 - (void)swizzleInputAccessoryView {
 	for (UIView* view in self.webView.scrollView.subviews) {
-		if(![_swizzledViewToOriginalClass.keyEnumerator.allObjects containsObject:view]) {
-			[_swizzledViewToOriginalClass setObject:view.class forKey:[NSValue valueWithNonretainedObject:view]];
+		//only swizzle unswizzled instances whose class starts with UIWeb
+		if(![NSStringFromClass(view.class) hasPrefix:swizzled] && [NSStringFromClass(view.class) hasPrefix:@"UIWeb"]) {
 			Class swizzledClass = [self getSwizzledSubclassOfView:view.class];
 			object_setClass(view, swizzledClass);
 		}
