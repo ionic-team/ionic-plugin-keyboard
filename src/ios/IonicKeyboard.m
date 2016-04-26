@@ -82,6 +82,11 @@ NSString* const swizzled = @"swizzled_";
 	}
 }
 
+//keyboard swizzling inspired by:
+//https://gist.github.com/bjhomer/2048571
+//http://stackoverflow.com/a/23398487/1091751
+//http://stackoverflow.com/a/19042279/273628
+
 - (Class)getSwizzledSubclassOfView:(Class)viewClass {
 	NSString* swizzledClassName = [NSString stringWithFormat:@"%@%@", swizzled, NSStringFromClass(viewClass)];
 	Class newClass = [_swizzledClassNameToClass objectForKey:swizzledClassName];
