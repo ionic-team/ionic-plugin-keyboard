@@ -17,7 +17,7 @@ NSString* const swizzled = @"swizzled_";
     __weak IonicKeyboard* weakSelf = self;
 
     //set defaults
-	_swizzledClassNameToClass = [[NSMutableDictionary alloc] init];
+    _swizzledClassNameToClass = [[NSMutableDictionary alloc] init];
     self.hideKeyboardAccessoryBar = YES;
     self.disableScroll = NO;
     //self.styleDark = NO;
@@ -68,18 +68,18 @@ NSString* const swizzled = @"swizzled_";
 }
 
 -(id)nil_inputAccessoryView {
-	return nil;
+    return nil;
 }
 
 - (void)unswizzleInputAccessoryView {
-	for (UIView* view in self.webView.scrollView.subviews) {
-		NSString* currentClassName = NSStringFromClass(view.class);
-		if ([currentClassName hasPrefix:swizzled]) {
-			NSString *originalClassName = [currentClassName substringFromIndex:[swizzled length]];
-			Class originalClass = NSClassFromString(originalClassName);
-			object_setClass(view, originalClass);
-		}
-	}
+    for (UIView* view in self.webView.scrollView.subviews) {
+        NSString* currentClassName = NSStringFromClass(view.class);
+        if ([currentClassName hasPrefix:swizzled]) {
+            NSString *originalClassName = [currentClassName substringFromIndex:[swizzled length]];
+            Class originalClass = NSClassFromString(originalClassName);
+            object_setClass(view, originalClass);
+        }
+    }
 }
 
 //keyboard swizzling inspired by:
@@ -88,44 +88,44 @@ NSString* const swizzled = @"swizzled_";
 //http://stackoverflow.com/a/19042279/273628
 
 - (Class)getSwizzledSubclassOfView:(Class)viewClass {
-	NSString* swizzledClassName = [NSString stringWithFormat:@"%@%@", swizzled, NSStringFromClass(viewClass)];
-	Class newClass = [_swizzledClassNameToClass objectForKey:swizzledClassName];
-	if(newClass == nil) {
-		newClass = objc_allocateClassPair(viewClass, [swizzledClassName UTF8String], 0);
-		[_swizzledClassNameToClass setObject:newClass forKey:swizzledClassName];
-		IMP nilImp = [self methodForSelector:@selector(nil_inputAccessoryView)];
-		class_addMethod(newClass, @selector(inputAccessoryView), nilImp, "@@:");
-		objc_registerClassPair(newClass);
-	}
-	return newClass;
+    NSString* swizzledClassName = [NSString stringWithFormat:@"%@%@", swizzled, NSStringFromClass(viewClass)];
+    Class newClass = [_swizzledClassNameToClass objectForKey:swizzledClassName];
+    if(newClass == nil) {
+        newClass = objc_allocateClassPair(viewClass, [swizzledClassName UTF8String], 0);
+        [_swizzledClassNameToClass setObject:newClass forKey:swizzledClassName];
+        IMP nilImp = [self methodForSelector:@selector(nil_inputAccessoryView)];
+        class_addMethod(newClass, @selector(inputAccessoryView), nilImp, "@@:");
+        objc_registerClassPair(newClass);
+    }
+    return newClass;
 }
 
 - (void)swizzleInputAccessoryView {
-	for (UIView* view in self.webView.scrollView.subviews) {
-		//only swizzle unswizzled instances whose class starts with UIWeb
-		if(![NSStringFromClass(view.class) hasPrefix:swizzled] && [NSStringFromClass(view.class) hasPrefix:@"UIWeb"]) {
-			Class swizzledClass = [self getSwizzledSubclassOfView:view.class];
-			object_setClass(view, swizzledClass);
-		}
-	}
+    for (UIView* view in self.webView.scrollView.subviews) {
+        //only swizzle unswizzled instances whose class starts with UIWeb
+        if(![NSStringFromClass(view.class) hasPrefix:swizzled] && [NSStringFromClass(view.class) hasPrefix:@"UIWeb"]) {
+            Class swizzledClass = [self getSwizzledSubclassOfView:view.class];
+            object_setClass(view, swizzledClass);
+        }
+    }
 }
 
 - (BOOL)hideKeyboardAccessoryBar {
-	return _hideKeyboardAccessoryBar;
+    return _hideKeyboardAccessoryBar;
 }
 
 - (void)setHideKeyboardAccessoryBar:(BOOL)hideKeyboardAccessoryBar {
-	if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar || ![self.webView isKindOfClass:[UIWebView class]]) {
-		return;
-	}
-	if (hideKeyboardAccessoryBar) {
-		[self swizzleInputAccessoryView];
-	}
-	else {
-		[self unswizzleInputAccessoryView];
-	}
-	
-	_hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
+    if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar || ![self.webView isKindOfClass:[UIWebView class]]) {
+        return;
+    }
+    if (hideKeyboardAccessoryBar) {
+        [self swizzleInputAccessoryView];
+    }
+    else {
+        [self unswizzleInputAccessoryView];
+    }
+    
+    _hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
 }
 
 /*
@@ -177,13 +177,13 @@ NSString* const swizzled = @"swizzled_";
 }
 
 - (void) hideKeyboardAccessoryBar:(CDVInvokedUrlCommand*)command {
-	if (!command.arguments || ![command.arguments count]){
-		return;
-	}
-	id value = [command.arguments objectAtIndex:0];
-	if (value != [NSNull null]) {
-		self.hideKeyboardAccessoryBar = [value boolValue];
-	}
+    if (!command.arguments || ![command.arguments count]){
+        return;
+    }
+    id value = [command.arguments objectAtIndex:0];
+    if (value != [NSNull null]) {
+        self.hideKeyboardAccessoryBar = [value boolValue];
+    }
 }
 
 - (void) close:(CDVInvokedUrlCommand*)command {
