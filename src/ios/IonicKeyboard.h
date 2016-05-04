@@ -1,9 +1,11 @@
 #import <Cordova/CDVPlugin.h>
+#import <objc/runtime.h>
 
 @interface IonicKeyboard : CDVPlugin <UIScrollViewDelegate> {
     @protected
     id _keyboardShowObserver, _keyboardHideObserver;
-    NSMutableDictionary* _swizzledClassNameToClass;
+    IMP wkOriginalImp, uiOriginalImp;
+    Method wkMethod, uiMethod;
 }
 
 @property (readwrite, assign) BOOL hideKeyboardAccessoryBar;

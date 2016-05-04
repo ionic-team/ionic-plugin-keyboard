@@ -1,7 +1,6 @@
 #import "IonicKeyboard.h"
 // #import "UIWebViewExtension.h"
 #import <Cordova/CDVAvailability.h>
-#import <objc/runtime.h>
 
 NSString* const swizzled = @"swizzled_";
 
@@ -13,15 +12,20 @@ NSString* const swizzled = @"swizzled_";
 
 - (void)pluginInitialize {
 
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    __weak IonicKeyboard* weakSelf = self;
-
+    Class wkClass = NSClassFromString([@[@"UI", @"Web", @"Browser", @"View"] componentsJoinedByString:@""]);
+    wkMethod = class_getInstanceMethod(wkClass, @selector(inputAccessoryView));
+    wkOriginalImp = method_getImplementation(wkMethod);
+    Class uiClass = NSClassFromString([@[@"WK", @"Content", @"View"] componentsJoinedByString:@""]);
+    uiMethod = class_getInstanceMethod(uiClass, @selector(inputAccessoryView));
+    uiOriginalImp = method_getImplementation(uiMethod);
+    
     //set defaults
-    _swizzledClassNameToClass = [[NSMutableDictionary alloc] init];
     self.hideKeyboardAccessoryBar = YES;
     self.disableScroll = NO;
     //self.styleDark = NO;
-
+    
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    __weak IonicKeyboard* weakSelf = self;
     _keyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
                                object:nil
                                queue:[NSOperationQueue mainQueue]
@@ -67,47 +71,11 @@ NSString* const swizzled = @"swizzled_";
     _disableScroll = disableScroll;
 }
 
--(id)nil_inputAccessoryView {
-    return nil;
-}
-
-- (void)unswizzleInputAccessoryView {
-    for (UIView* view in self.webView.scrollView.subviews) {
-        NSString* currentClassName = NSStringFromClass(view.class);
-        if ([currentClassName hasPrefix:swizzled]) {
-            NSString *originalClassName = [currentClassName substringFromIndex:[swizzled length]];
-            Class originalClass = NSClassFromString(originalClassName);
-            object_setClass(view, originalClass);
-        }
-    }
-}
-
 //keyboard swizzling inspired by:
-//https://gist.github.com/bjhomer/2048571
-//http://stackoverflow.com/a/23398487/1091751
-//http://stackoverflow.com/a/19042279/273628
+//https://github.com/cjpearson/cordova-plugin-keyboard/
 
-- (Class)getSwizzledSubclassOfView:(Class)viewClass {
-    NSString* swizzledClassName = [NSString stringWithFormat:@"%@%@", swizzled, NSStringFromClass(viewClass)];
-    Class newClass = [_swizzledClassNameToClass objectForKey:swizzledClassName];
-    if(newClass == nil) {
-        newClass = objc_allocateClassPair(viewClass, [swizzledClassName UTF8String], 0);
-        [_swizzledClassNameToClass setObject:newClass forKey:swizzledClassName];
-        IMP nilImp = [self methodForSelector:@selector(nil_inputAccessoryView)];
-        class_addMethod(newClass, @selector(inputAccessoryView), nilImp, "@@:");
-        objc_registerClassPair(newClass);
-    }
-    return newClass;
-}
-
-- (void)swizzleInputAccessoryView {
-    for (UIView* view in self.webView.scrollView.subviews) {
-        //only swizzle unswizzled instances whose class starts with UIWeb
-        if(![NSStringFromClass(view.class) hasPrefix:swizzled] && [NSStringFromClass(view.class) hasPrefix:@"UIWeb"]) {
-            Class swizzledClass = [self getSwizzledSubclassOfView:view.class];
-            object_setClass(view, swizzledClass);
-        }
-    }
+id nil_inputAccessoryView() {
+    return nil;
 }
 
 - (BOOL)hideKeyboardAccessoryBar {
@@ -115,14 +83,16 @@ NSString* const swizzled = @"swizzled_";
 }
 
 - (void)setHideKeyboardAccessoryBar:(BOOL)hideKeyboardAccessoryBar {
-    if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar || ![self.webView isKindOfClass:[UIWebView class]]) {
+    if (hideKeyboardAccessoryBar == _hideKeyboardAccessoryBar) {
         return;
     }
+
     if (hideKeyboardAccessoryBar) {
-        [self swizzleInputAccessoryView];
-    }
-    else {
-        [self unswizzleInputAccessoryView];
+        method_setImplementation(wkMethod, (IMP)nil_inputAccessoryView);
+        method_setImplementation(uiMethod, (IMP)nil_inputAccessoryView);
+    } else {
+        method_setImplementation(wkMethod, wkOriginalImp);
+        method_setImplementation(uiMethod, uiOriginalImp);
     }
     
     _hideKeyboardAccessoryBar = hideKeyboardAccessoryBar;
