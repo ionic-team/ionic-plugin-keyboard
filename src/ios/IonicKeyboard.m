@@ -18,6 +18,9 @@ NSString* const swizzled = @"swizzled_";
     Class uiClass = NSClassFromString([@[@"WK", @"Content", @"View"] componentsJoinedByString:@""]);
     uiMethod = class_getInstanceMethod(uiClass, @selector(inputAccessoryView));
     uiOriginalImp = method_getImplementation(uiMethod);
+    nilImp = imp_implementationWithBlock(^(id _s) {
+        return nil;
+    });
     
     //set defaults
     self.hideKeyboardAccessoryBar = YES;
@@ -74,10 +77,6 @@ NSString* const swizzled = @"swizzled_";
 //keyboard swizzling inspired by:
 //https://github.com/cjpearson/cordova-plugin-keyboard/
 
-id nil_inputAccessoryView() {
-    return nil;
-}
-
 - (BOOL)hideKeyboardAccessoryBar {
     return _hideKeyboardAccessoryBar;
 }
@@ -88,8 +87,8 @@ id nil_inputAccessoryView() {
     }
 
     if (hideKeyboardAccessoryBar) {
-        method_setImplementation(wkMethod, (IMP)nil_inputAccessoryView);
-        method_setImplementation(uiMethod, (IMP)nil_inputAccessoryView);
+        method_setImplementation(wkMethod, nilImp);
+        method_setImplementation(uiMethod, nilImp);
     } else {
         method_setImplementation(wkMethod, wkOriginalImp);
         method_setImplementation(uiMethod, uiOriginalImp);

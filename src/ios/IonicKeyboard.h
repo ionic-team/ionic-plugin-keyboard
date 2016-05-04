@@ -4,7 +4,7 @@
 @interface IonicKeyboard : CDVPlugin <UIScrollViewDelegate> {
     @protected
     id _keyboardShowObserver, _keyboardHideObserver;
-    IMP wkOriginalImp, uiOriginalImp;
+    IMP wkOriginalImp, uiOriginalImp, nilImp;
     Method wkMethod, uiMethod;
 }
 
