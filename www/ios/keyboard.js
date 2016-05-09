@@ -9,7 +9,7 @@ var Keyboard = function() {
 
 Keyboard.hideKeyboardAccessoryBar = function(hide) {
     // exec(null, null, "Keyboard", "hideKeyboardAccessoryBar", [hide]);
-    console.warn('hideKeyboardAccessoryBar has been removed until a method is found that doesn\'t get rejected from the App Store.')
+    console.warn('hideKeyboardAccessoryBar has been temporarily removed on iOS until an Apple-approved method is found.');
 };
 
 Keyboard.close = function() {
