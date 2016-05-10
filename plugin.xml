@@ -38,13 +38,8 @@
                 <param name="ios-package" value="IonicKeyboard" onload="true" />
             </feature>
         </config-file>
-
         <header-file src="src/ios/IonicKeyboard.h" />
         <source-file src="src/ios/IonicKeyboard.m" />
-    <!--
-        <header-file src="src/ios/UIWebViewExtension.h" />
-        <source-file src="src/ios/UIWebViewExtension.m" />
-     -->
     </platform>
 
 	<!-- browser -->

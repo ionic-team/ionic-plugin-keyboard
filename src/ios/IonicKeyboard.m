@@ -2,8 +2,6 @@
 // #import "UIWebViewExtension.h"
 #import <Cordova/CDVAvailability.h>
 
-NSString* const swizzled = @"swizzled_";
-
 @implementation IonicKeyboard
 
 @synthesize hideKeyboardAccessoryBar = _hideKeyboardAccessoryBar;
