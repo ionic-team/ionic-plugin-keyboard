@@ -8,7 +8,7 @@ The `cordova.plugins.Keyboard` object provides functions to make interacting wit
 Methods
 -------
 
-- ~~cordova.plugins.Keyboard.hideKeyboardAccessoryBar~~ (**removed in 2.0, see below**)
+- cordova.plugins.Keyboard.hideKeyboardAccessoryBar
 - cordova.plugins.Keyboard.close
 - cordova.plugins.Keyboard.disableScroll
 - cordova.plugins.Keyboard.show
@@ -30,10 +30,8 @@ These events are fired on the window.
 
 # API reference
 
-~~Keyboard.hideKeyboardAccessoryBar~~
+Keyboard.hideKeyboardAccessoryBar
 =================
-
-**NOTE: This method started causing apps to be rejected from the App Store, so has been removed until a workaround is found.**
 
 Hide the keyboard accessory bar with the next, previous and done buttons.
 
