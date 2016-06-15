@@ -73,11 +73,6 @@ public class IonicKeyboard extends CordovaPlugin {
                             //r will be populated with the coordinates of your view that area still visible.
                             rootView.getWindowVisibleDisplayFrame(r);
 
-                            // get status bar height in pixels
-                            Rect rectgle= new Rect();
-                            rootView.getWindowVisibleDisplayFrame(rectgle);
-                            int pixelStatusBarHeight = (int)(rectgle.top / density);
-                            
                             PluginResult result;
 
                             // cache properties for later use
@@ -102,8 +97,7 @@ public class IonicKeyboard extends CordovaPlugin {
 
                             int pixelHeightDiff = (int)(heightDiff / density);
                             if (pixelHeightDiff > 100 && pixelHeightDiff != previousHeightDiff) { // if more than 100 pixels, its probably a keyboard...
-                                // return status bar height in addition to keyboard height
-                                String msg = "S" + Integer.toString(pixelHeightDiff) + ";" + Integer.toString(pixelStatusBarHeight);
+                                String msg = "S" + Integer.toString(pixelHeightDiff);
                                 result = new PluginResult(PluginResult.Status.OK, msg);
                                 result.setKeepCallback(true);
                                 callbackContext.sendPluginResult(result);
@@ -119,8 +113,8 @@ public class IonicKeyboard extends CordovaPlugin {
                     };
 
                     rootView.getViewTreeObserver().addOnGlobalLayoutListener(list);
-                	
-                	
+
+
                     PluginResult dataResult = new PluginResult(PluginResult.Status.OK);
                     dataResult.setKeepCallback(true);
                     callbackContext.sendPluginResult(dataResult);
