@@ -78,7 +78,6 @@ public class IonicKeyboard extends CordovaPlugin {
                             // cache properties for later use
                             int rootViewHeight = rootView.getRootView().getHeight();
                             int resultBottom = r.bottom;
-                            int resultTop = r.top;
 
                             // calculate screen height differently for android versions >= 21: Lollipop 5.x, Marshmallow 6.x
                             //http://stackoverflow.com/a/29257533/3642890 beware of nexus 5
