@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="ionic-plugin-keyboard"
-    version="2.2.0">
+    version="2.2.1">
     <name>Keyboard</name>
     <description>Ionic Keyboard Plugin</description>
     <license>Apache 2.0</license>

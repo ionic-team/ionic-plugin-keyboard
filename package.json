@@ -1,6 +1,6 @@
 {
   "name": "ionic-plugin-keyboard",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "cordova": {
     "id": "ionic-plugin-keyboard",
     "platforms": [
