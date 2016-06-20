@@ -86,7 +86,7 @@ Supported Platforms
 native.keyboardshow
 =================
 
-This event fires when the keyboard will be shown
+This event fires when the keyboard will be shown or when the keyboard frame resizes (when switching between keyboards for example)
 
     window.addEventListener('native.keyboardshow', keyboardShowHandler);
 
