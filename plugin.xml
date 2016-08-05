@@ -14,7 +14,6 @@
     <!-- android -->
     <platform name="android">
         <js-module src="www/android/keyboard.js" name="keyboard">
-            <runs/>
             <clobbers target="cordova.plugins.Keyboard" />
         </js-module>
         <config-file target="res/xml/config.xml" parent="/*">
@@ -30,7 +29,6 @@
     <!-- ios -->
     <platform name="ios">
         <js-module src="www/ios/keyboard.js" name="keyboard">
-            <runs/>
             <clobbers target="cordova.plugins.Keyboard" />
         </js-module>
         <config-file target="config.xml" parent="/*">
@@ -45,7 +43,6 @@
 	<!-- browser -->
     <platform name="browser">
         <js-module src="www/browser/keyboard.js" name="keyboard">
-            <runs/>
             <clobbers target="cordova.plugins.Keyboard" />
         </js-module>
     </platform>
@@ -63,7 +60,6 @@
     <!-- windows -->
     <platform name="windows">
         <js-module src="src/windows/KeyboardProxy.js" name="KeyboardProxy">
-            <runs />
             <clobbers target="cordova.plugins.Keyboard" />
         </js-module>
     </platform>
