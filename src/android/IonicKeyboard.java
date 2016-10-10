@@ -22,6 +22,8 @@ import android.graphics.Point;
 import android.os.Build;
 
 public class IonicKeyboard extends CordovaPlugin {
+    private OnGlobalLayoutListener list;
+    private View rootView;
 
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -64,8 +66,8 @@ public class IonicKeyboard extends CordovaPlugin {
                     final float density = dm.density;
 
                     //http://stackoverflow.com/a/4737265/1091751 detect if keyboard is showing
-                    final View rootView = cordova.getActivity().getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
-                    OnGlobalLayoutListener list = new OnGlobalLayoutListener() {
+                    rootView = cordova.getActivity().getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
+                    list = new OnGlobalLayoutListener() {
                         int previousHeightDiff = 0;
                         @Override
                         public void onGlobalLayout() {
@@ -124,6 +126,10 @@ public class IonicKeyboard extends CordovaPlugin {
         return false;  // Returning false results in a "MethodNotFound" error.
     }
 
+    @Override
+    public void onDestroy() {
+        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(list);
+    }
 
 }
 
