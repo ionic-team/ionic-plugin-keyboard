@@ -5,6 +5,11 @@ The `cordova.plugins.Keyboard` object provides functions to make interacting wit
 
     cordova plugin add ionic-plugin-keyboard --save
 
+Notes
+------
+This plugin uses a private api on the iOS platform, therefore if you use this plugin your app is at risk of being rejected by Apple.
+The part of the private api being used is the "UIWebBrowserView" in the UIWebviewExtension.m file of this plugin.
+
 Methods
 -------
 
