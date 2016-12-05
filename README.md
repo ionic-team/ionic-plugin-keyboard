@@ -126,3 +126,25 @@ Supported Platforms
 -------------------
 
 - iOS, Android, Blackberry 10, Windows
+
+
+native.keyboardchange
+=================
+
+This event fires when the keyboard will be resized. When will this ever occur? The iOS emoji keyboard height is different from the standard keyboards, but only if the device keyboard "Preditive" setting is turned off. When switching the keyboard from or to the emoji keyboard, the keyboardchange event fires and the keyboard height is recalculated.
+
+    window.addEventListener('native.keyboardchange', keyboardChangeHandler);
+
+    function keyboardChangeHandler(e){
+        alert('Keyboard resized, new keyboard height is ' + e.keyboardHeight);
+    }
+
+Properties
+-----------
+
+None
+
+Supported Platforms
+-------------------
+
+- iOS
