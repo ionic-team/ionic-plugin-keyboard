@@ -8,20 +8,20 @@ var argscheck = require('cordova/argscheck'),
 var Keyboard = function() {
 };
 
-Keyboard.hideKeyboardAccessoryBar = function(hide) {
-    exec(null, null, "Keyboard", "hideKeyboardAccessoryBar", [hide]);
+Keyboard.hideKeyboardAccessoryBar = function(hide, onSuccess, onError) {
+    exec(onSuccess, onError, "Keyboard", "hideKeyboardAccessoryBar", [hide]);
 };
 
-Keyboard.close = function() {
-    exec(null, null, "Keyboard", "close", []);
+Keyboard.close = function(onSuccess, onError) {
+    exec(onSuccess, onError, "Keyboard", "close", []);
 };
 
-Keyboard.show = function() {
-    exec(null, null, "Keyboard", "show", []);
+Keyboard.show = function(onSuccess, onError) {
+    exec(onSuccess, onError, "Keyboard", "show", []);
 };
 
-Keyboard.disableScroll = function(disable) {
-    exec(null, null, "Keyboard", "disableScroll", [disable]);
+Keyboard.disableScroll = function(disable, onSuccess, onError) {
+    exec(onSuccess, onError, "Keyboard", "disableScroll", [disable]);
 };
 
 /*
