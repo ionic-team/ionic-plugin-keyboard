@@ -32,13 +32,15 @@
                                queue:[NSOperationQueue mainQueue]
                                usingBlock:^(NSNotification* notification) {
 
-                                   CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-                                   keyboardFrame = [self.viewController.view convertRect:keyboardFrame fromView:nil];
+                                   CGRect screen = [[UIScreen mainScreen] bounds];
+                                   CGRect keyboard = ((NSValue*)notification.userInfo[@"UIKeyboardFrameEndUserInfoKey"]).CGRectValue;
+                                   CGRect intersection = CGRectIntersection(screen, keyboard);
+                                   CGFloat height = MIN(intersection.size.width, intersection.size.height);
 
-                                   [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.plugins.Keyboard.isVisible = true; cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight': %@ }); ", [@(keyboardFrame.size.height) stringValue]]];
+                                   [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.plugins.Keyboard.isVisible = true; cordova.fireWindowEvent('native.keyboardshow', { 'keyboardHeight': %f }); ", height]];
 
                                    //deprecated
-                                   [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight': %@ }); ", [@(keyboardFrame.size.height) stringValue]]];
+                                   [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireWindowEvent('native.showkeyboard', { 'keyboardHeight': %f }); ", height]];
                                }];
 
     _keyboardHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
