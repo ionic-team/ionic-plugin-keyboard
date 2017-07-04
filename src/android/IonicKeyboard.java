@@ -133,7 +133,7 @@ public class IonicKeyboard extends CordovaPlugin {
         } else {
             String msg = "NullPointerException";
             if (rootView == null)
-                msg = "rootView variable is null"
+                msg = "rootView variable is null";
             else if (rootView.getViewTreeObserver() == null)
                 msg = "rootView.getViewTreeObserver() is null";
             else if (list == null)
