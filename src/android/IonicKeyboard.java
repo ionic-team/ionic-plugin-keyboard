@@ -129,19 +129,17 @@ public class IonicKeyboard extends CordovaPlugin {
 
     @Override
     public void onDestroy() {
-        String msg = "NullPointerException";
         try {
             rootView.getViewTreeObserver().removeOnGlobalLayoutListener(list);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
+            String msg = "";
 
-            if (rootView == null)
-                msg = "rootView variable is null";
-            if (rootView.getViewTreeObserver() == null)
-                msg = "rootView.getViewTreeObserver() is null";
-            if (list == null)
-                msg = "list variable is null";
+            if (rootView == null) msg += "rootView variable is null ";
+            if (rootView.getViewTreeObserver() == null) msg += "rootView.getViewTreeObserver() is null ";
+            if (list == null) msg += "list variable is null ";
+            if (msg.isEmpty()) msg = e.getMessage();
 
-            Log.d("IonicKeyboard", msg, e);
+            Log.w("IonicKeyboard", msg, e);
         }
         super.onDestroy();
     }
