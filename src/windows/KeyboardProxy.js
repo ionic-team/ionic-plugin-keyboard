@@ -29,7 +29,7 @@ module.exports.show = function () {
 };
 
 module.exports.close = function () {
-    if (typeof inputPane.tryShow === 'function') {
+    if (typeof inputPane.tryHide === 'function') {
         inputPane.tryHide();
     }
 };
