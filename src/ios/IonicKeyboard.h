@@ -10,6 +10,7 @@
 
 @property (readwrite, assign) BOOL hideKeyboardAccessoryBar;
 @property (readwrite, assign) BOOL disableScroll;
+@property (readonly, assign, nonatomic) BOOL keyboardIsVisible;
 //@property (readwrite, assign) BOOL styleDark;
 
 @end
