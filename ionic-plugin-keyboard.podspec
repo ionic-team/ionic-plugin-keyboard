@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ionic-plugin-keyboard"
-  s.version      = "1.0.0"
+  s.version      = "2.2.1"
   s.summary      = "Ionic Keyboard Plugin"
 
   # This description is used to generate tags and improve search results.
@@ -53,9 +53,9 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
 
-  s.author             = { "Ionic team" => "hi@ionic.io" }
+  # s.author             = { "Ionic team" => "hi@ionic.io" }
   # Or just: s.author    = ""
-  # s.authors            = { "" => "foo@bar.com" }
+  s.authors            = { "Ionic team" => "hi@ionic.io", "Michel Felipe" => "mfelipeof@gmail.com" }
   # s.social_media_url   = "http://twitter.com/"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/mfdeveloper/ionic-plugin-keyboard.git", :tag => "v2.2.1", :branch => "cocoapods-dependency" }
+  s.source       = { :git => "https://github.com/ionic-team/ionic-plugin-keyboard.git", :tag => "v#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
