@@ -119,7 +119,12 @@
 /* ------------------------------------------------------------- */
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [scrollView setContentOffset: CGPointZero];
+    if (@available(iOS 11.0, *)) {
+        [scrollView setContentOffset: CGPointMake(0.0, self.webView.safeAreaInsets.top * -1)];
+    }
+    else {
+        [scrollView setContentOffset: CGPointZero];
+    }
 }
 
 /* ------------------------------------------------------------- */
