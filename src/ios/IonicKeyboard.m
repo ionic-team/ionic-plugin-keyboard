@@ -50,6 +50,15 @@
                                    //deprecated
                                    [weakSelf.commandDelegate evalJs:@"cordova.fireWindowEvent('native.hidekeyboard'); "];
                                }];
+    
+    _keyboardChangeObserver = [nc addObserverForName:UITextInputCurrentInputModeDidChangeNotification
+                                              object:nil queue:[NSOperationQueue mainQueue]
+                                          usingBlock:^(NSNotification* notification){
+                                              NSString * primaryLanguage = [UITextInputMode currentInputMode].primaryLanguage;
+                                              NSString * jsWithLang      = [NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {lang: %@});", primaryLanguage];
+                                              [weakSelf.commandDelegate evalJs:jsWithLang];
+                                          }];
+    
 }
 
 - (BOOL)disableScroll {
