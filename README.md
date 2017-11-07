@@ -91,7 +91,7 @@ This event fires when the keyboard will be shown or when the keyboard frame resi
     window.addEventListener('native.keyboardshow', keyboardShowHandler);
 
     function keyboardShowHandler(e){
-        alert('Keyboard height is: ' + e.keyboardHeight);
+        alert('Keyboard lang is: ' + e.keyboardHeight);
     }
 
 
