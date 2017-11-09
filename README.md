@@ -108,7 +108,7 @@ This event fires when the keyboard will be shown when the keyboard frame resizes
     window.addEventListener('native.keyboardchange', keyboardChangeHandler);
 
     function keyboardChangeHandler(e){
-        alert('Keyboard height is: ' + e.height);
+        alert('Keyboard height is: ' + e.keyboardHeight);
     }
 
 
