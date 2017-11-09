@@ -54,8 +54,10 @@
     _keyboardChangeObserver = [nc addObserverForName:UITextInputCurrentInputModeDidChangeNotification
                                               object:nil queue:[NSOperationQueue mainQueue]
                                           usingBlock:^(NSNotification* notification){
+                                              CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+                                              keyboardFrame = [self.viewController.view convertRect:keyboardFrame fromView:nil];
                                               NSString * primaryLanguage = [UITextInputMode currentInputMode].primaryLanguage;
-                                              NSString * jsWithLang      = [NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {lang: '%@'});", primaryLanguage];
+                                              NSString * jsWithLang      = [NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {lang: '%@', height: %@});", primaryLanguage, [@(keyboardFrame.size.height) stringValue]];
                                               [weakSelf.commandDelegate evalJs:jsWithLang];
                                           }];
     
