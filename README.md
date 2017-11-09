@@ -3,7 +3,7 @@ Keyboard
 
 The `cordova.plugins.Keyboard` object provides functions to make interacting with the keyboard easier, and fires events to indicate that the keyboard will hide/show.
 
-    cordova plugin add https://github.com/thessler27/ionic-plugin-keyboard --save
+    cordova plugin add ionic-plugin-keyboard --save
 
 Methods
 -------
@@ -91,7 +91,7 @@ This event fires when the keyboard will be shown or when the keyboard frame resi
     window.addEventListener('native.keyboardshow', keyboardShowHandler);
 
     function keyboardShowHandler(e){
-        alert('Keyboard lang is: ' + e.keyboardHeight);
+        alert('Keyboard height is: ' + e.keyboardHeight);
     }
 
 
@@ -103,12 +103,11 @@ keyboardHeight: the height of the keyboard in pixels
 native.keyboardchange (iOS ONLY)
 =================
 
-This event fires when the keyboard will be shown or when the keyboard frame resizes (when switching between keyboards for example)
+This event fires when the keyboard will be shown when the keyboard frame resizes (when switching between keyboards for example)
 
     window.addEventListener('native.keyboardchange', keyboardChangeHandler);
 
     function keyboardChangeHandler(e){
-        alert('Keyboard lang is: ' + e.lang);
         alert('Keyboard height is: ' + e.height);
     }
 

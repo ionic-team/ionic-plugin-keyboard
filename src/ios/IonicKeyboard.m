@@ -51,17 +51,19 @@
                                    [weakSelf.commandDelegate evalJs:@"cordova.fireWindowEvent('native.hidekeyboard'); "];
                                }];
     
-    _keyboardChangeObserver = [nc addObserverForName:UITextInputCurrentInputModeDidChangeNotification
-                                              object:nil queue:[NSOperationQueue mainQueue]
+    _keyboardChangeObserver = [nc addObserverForName:UIKeyboardDidChangeFrameNotification
+                                              object:nil
+                                               queue:[NSOperationQueue mainQueue]
                                           usingBlock:^(NSNotification* notification){
-                                              CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-                                              keyboardFrame = [self.viewController.view convertRect:keyboardFrame fromView:nil];
-                                              NSString * primaryLanguage = [UITextInputMode currentInputMode].primaryLanguage;
-                                              NSString * jsWithLang      = [NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {lang: '%@', height: %@});", primaryLanguage, [@(keyboardFrame.size.height) stringValue]];
+                                              NSLog(@"keyboard will change");
+                                              CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+                                              NSString * jsWithLang      = [NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {height: %@});", [@(keyboardSize.height) stringValue]];
+                                              NSLog(@"ui keyboard will change frame not height: %f", keyboardSize.height);
                                               [weakSelf.commandDelegate evalJs:jsWithLang];
                                           }];
     
 }
+
 
 - (BOOL)disableScroll {
     return _disableScroll;
