@@ -55,11 +55,8 @@
                                               object:nil
                                                queue:[NSOperationQueue mainQueue]
                                           usingBlock:^(NSNotification* notification){
-                                              NSLog(@"keyboard will change");
-                                              CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-                                              NSString * jsWithLang      = [NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {'keyboardHeight': %@});", [@(keyboardSize.height) stringValue]];
-                                              NSLog(@"ui keyboard will change frame not height: %f", keyboardSize.height);
-                                              [weakSelf.commandDelegate evalJs:jsWithLang];
+                                              CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;                                            
+                                              [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {'keyboardHeight': %@});", [@(keyboardSize.height) stringValue]]];
                                           }];
     
 }
