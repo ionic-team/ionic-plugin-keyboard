@@ -50,7 +50,17 @@
                                    //deprecated
                                    [weakSelf.commandDelegate evalJs:@"cordova.fireWindowEvent('native.hidekeyboard'); "];
                                }];
+    
+    _keyboardChangeObserver = [nc addObserverForName:UIKeyboardDidChangeFrameNotification
+                                              object:nil
+                                               queue:[NSOperationQueue mainQueue]
+                                          usingBlock:^(NSNotification* notification){
+                                              CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;                                            
+                                              [weakSelf.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {'keyboardHeight': %@});", [@(keyboardSize.height) stringValue]]];
+                                          }];
+    
 }
+
 
 - (BOOL)disableScroll {
     return _disableScroll;

@@ -94,11 +94,28 @@ This event fires when the keyboard will be shown or when the keyboard frame resi
         alert('Keyboard height is: ' + e.keyboardHeight);
     }
 
+
 Properties
 -----------
 
 keyboardHeight: the height of the keyboard in pixels
 
+native.keyboardchange (iOS ONLY)
+=================
+
+This event fires when the keyboard will be shown when the keyboard frame resizes (when switching between keyboards for example)
+
+    window.addEventListener('native.keyboardchange', keyboardChangeHandler);
+
+    function keyboardChangeHandler(e){
+        alert('Keyboard height is: ' + e.keyboardHeight);
+    }
+
+
+Properties
+-----------
+
+keyboardHeight: the height of the keyboard in pixels
 
 Supported Platforms
 -------------------
