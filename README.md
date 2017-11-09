@@ -115,7 +115,7 @@ This event fires when the keyboard will be shown when the keyboard frame resizes
 Properties
 -----------
 
-lang: current language of the keyboard. it's a string.
+keyboardHeight: the height of the keyboard in pixels
 
 Supported Platforms
 -------------------
