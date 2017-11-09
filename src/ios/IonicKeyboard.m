@@ -56,8 +56,6 @@
                                           usingBlock:^(NSNotification* notification){
                                               NSString * primaryLanguage = [UITextInputMode currentInputMode].primaryLanguage;
                                               NSString * jsWithLang      = [NSString stringWithFormat:@"cordova.fireWindowEvent('native.keyboardchange', {lang: '%@'});", primaryLanguage];
-                                              NSLog(@"Keyboard change");
-                                              NSLog(@"js with lang %@", jsWithLang);
                                               [weakSelf.commandDelegate evalJs:jsWithLang];
                                           }];
     
