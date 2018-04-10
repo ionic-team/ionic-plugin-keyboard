@@ -36,6 +36,9 @@
                 <param name="ios-package" value="IonicKeyboard" onload="true" />
             </feature>
         </config-file>
+        <config-file target="*-Info.plist" parent="CFBundleAllowMixedLocalizations">
+            <true/>
+        </config-file>
         <header-file src="src/ios/IonicKeyboard.h" />
         <source-file src="src/ios/IonicKeyboard.m" />
     </platform>
