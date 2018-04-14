@@ -1,5 +1,6 @@
 package io.ionic.keyboard;
 
+import android.util.Log;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -128,7 +129,19 @@ public class IonicKeyboard extends CordovaPlugin {
 
     @Override
     public void onDestroy() {
-        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(list);
+        try {
+            rootView.getViewTreeObserver().removeOnGlobalLayoutListener(list);
+        } catch (Exception e) {
+            String msg = "";
+
+            if (rootView == null) msg += "rootView variable is null ";
+            if (rootView.getViewTreeObserver() == null) msg += "rootView.getViewTreeObserver() is null ";
+            if (list == null) msg += "list variable is null ";
+            if (msg.isEmpty()) msg = e.getMessage();
+
+            Log.w("IonicKeyboard", msg, e);
+        }
+        super.onDestroy();
     }
 
 }
