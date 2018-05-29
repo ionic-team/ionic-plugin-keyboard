@@ -18,6 +18,9 @@ inputPane.addEventListener('showing', function(e) {
     cordova.plugins.Keyboard.isVisible = true;
 });
 
+module.exports.hideKeyboardAccessoryBar = function (hide) {
+};
+
 module.exports.disableScroll = function (disable) {
     keyboardScrollDisabled = disable;
 };
